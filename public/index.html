@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lamak Hospitality Unit</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ─────────────────────────────────────────────── */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d0f14;
+  --surface:#13161e;
+  --surface2:#1a1e28;
+  --surface3:#222736;
+  --glass:rgba(255,255,255,0.04);
+  --glass2:rgba(255,255,255,0.07);
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.14);
+  --text:#f0f2f8;
+  --text2:#8b92a8;
+  --text3:#555d73;
+  --accent:#6c7fff;
+  --accent2:#a78bfa;
+  --teal:#34d6b0;
+  --amber:#f59e0b;
+  --rose:#f87171;
+  --green:#4ade80;
+  --r:12px;
+  --font:'Outfit',sans-serif;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px}
+
+/* ── SCROLLBARS ──────────────────────────────────────────────── */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+
+/* ── LAYOUT ──────────────────────────────────────────────────── */
+.app{display:flex;height:100vh;overflow:hidden}
+#auth-screen{display:flex;align-items:center;justify-content:center;height:100vh;background:var(--bg);position:relative;overflow:hidden}
+#auth-screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(108,127,255,0.12),transparent),radial-gradient(ellipse 40% 40% at 80% 80%,rgba(167,139,250,0.08),transparent);pointer-events:none}
+#main-app{display:none;height:100vh;overflow:hidden}
+
+/* ── AUTH CARD ───────────────────────────────────────────────── */
+.auth-card{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:36px 40px;width:420px;max-width:95vw;position:relative;z-index:1}
+.auth-logo{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.auth-logo-mark{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;flex-shrink:0}
+.auth-logo-text{font-size:16px;font-weight:700;line-height:1.2}
+.auth-logo-text span{display:block;font-size:11px;font-weight:400;color:var(--text2)}
+.auth-title{font-size:22px;font-weight:700;margin-bottom:6px}
+.auth-sub{font-size:13px;color:var(--text2);margin-bottom:24px}
+.auth-tabs{display:flex;gap:4px;background:var(--surface2);border-radius:10px;padding:4px;margin-bottom:24px}
+.auth-tab{flex:1;padding:8px;text-align:center;border-radius:7px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s}
+.auth-tab.active{background:var(--accent);color:#fff}
+
+/* ── FORM ELEMENTS ───────────────────────────────────────────── */
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:5px}
+.form-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:10px 14px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:border-color .15s}
+.form-input:focus{border-color:var(--accent);background:var(--surface3)}
+.form-input::placeholder{color:var(--text3)}
+.form-input option{background:var(--surface2)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.input-wrap{position:relative}
+.input-wrap .form-input{padding-right:38px}
+.input-wrap .input-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text3);cursor:pointer;font-size:16px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;font-family:var(--font);border:none;text-decoration:none}
+.btn-primary{background:var(--accent);color:#fff;width:100%}
+.btn-primary:hover{background:#5a6fe8;transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(0)}
+.btn-outline{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.btn-outline:hover{background:var(--glass2);color:var(--text)}
+.btn-sm{padding:7px 14px;font-size:12px}
+.btn-danger{background:rgba(248,113,113,0.15);color:var(--rose);border:1px solid rgba(248,113,113,0.3)}
+.btn-danger:hover{background:rgba(248,113,113,0.25)}
+.btn-success{background:rgba(74,222,128,0.15);color:var(--green);border:1px solid rgba(74,222,128,0.3)}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important}
+
+.form-link{color:var(--accent);cursor:pointer;font-size:12px;text-decoration:none}
+.form-link:hover{text-decoration:underline}
+.form-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:12px;color:var(--text3)}
+
+/* ── ALERTS ──────────────────────────────────────────────────── */
+.alert{padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:14px;display:none}
+.alert.show{display:block}
+.alert-error{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);color:var(--rose)}
+.alert-success{background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);color:var(--green)}
+
+/* ── SIDEBAR ──────────────────────────────────────────────────── */
+.sidebar{width:224px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;transition:width .25s;overflow:hidden}
+.sidebar.collapsed{width:60px}
+.logo-area{padding:16px 14px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;cursor:pointer}
+.logo-text{font-weight:700;font-size:12px;line-height:1.3;white-space:nowrap;overflow:hidden}
+.logo-text span{color:var(--text2);font-weight:400;font-size:10px;display:block}
+nav{flex:1;padding:8px 6px;overflow-y:auto;overflow-x:hidden}
+.nav-section{margin-bottom:16px}
+.nav-label{font-size:9px;font-weight:700;letter-spacing:0.08em;color:var(--text3);text-transform:uppercase;padding:0 8px 5px;white-space:nowrap;overflow:hidden;transition:opacity .25s}
+.sidebar.collapsed .nav-label{opacity:0}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;color:var(--text2);font-size:12px;font-weight:400;transition:all .15s;margin-bottom:1px;position:relative;white-space:nowrap}
+.nav-item:hover{background:var(--glass2);color:var(--text)}
+.nav-item.active{background:rgba(108,127,255,0.15);color:var(--accent);font-weight:500}
+.nav-item.active::before{content:'';position:absolute;left:0;top:4px;bottom:4px;width:3px;background:var(--accent);border-radius:0 3px 3px 0}
+.nav-item i{font-size:17px;width:19px;text-align:center;flex-shrink:0}
+.nav-item-text{overflow:hidden;transition:opacity .25s,width .25s}
+.sidebar.collapsed .nav-item-text{opacity:0;width:0}
+.nbadge{margin-left:auto;background:var(--accent);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:20px;min-width:17px;text-align:center;transition:opacity .25s}
+.sidebar.collapsed .nbadge{opacity:0}
+.sidebar-footer{padding:10px 6px;border-top:1px solid var(--border)}
+.user-mini{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:background .15s;overflow:hidden}
+.user-mini:hover{background:var(--glass2)}
+.uav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.user-mini-info{flex:1;min-width:0;overflow:hidden;transition:opacity .25s}
+.sidebar.collapsed .user-mini-info{opacity:0}
+.user-mini-name{font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-mini-role{font-size:10px;color:var(--text3)}
+
+/* ── MAIN AREA ───────────────────────────────────────────────── */
+.main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.topbar{height:52px;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 18px;gap:12px;background:var(--surface);flex-shrink:0}
+.topbar-title{font-size:15px;font-weight:700;flex:1}
+.search-wrap{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 12px;width:220px;transition:border-color .15s}
+.search-wrap:focus-within{border-color:var(--accent)}
+.search-wrap input{background:none;border:none;outline:none;color:var(--text);font-size:12px;font-family:var(--font);width:100%}
+.search-wrap input::placeholder{color:var(--text3)}
+.search-wrap i{color:var(--text3);font-size:14px}
+.icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--glass);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);transition:all .15s;position:relative;font-size:16px}
+.icon-btn:hover{background:var(--glass2);color:var(--text);border-color:var(--border2)}
+.notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--rose);border:2px solid var(--surface)}
+.content{flex:1;overflow-y:auto;padding:20px}
+
+/* ── PAGES ───────────────────────────────────────────────────── */
+.page{display:none;animation:fadeUp .2s ease}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── STATS GRID ──────────────────────────────────────────────── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stats-grid.s3{grid-template-columns:repeat(3,1fr)}
+.stats-grid.s2{grid-template-columns:1fr 1fr}
+.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:default;transition:all .2s}
+.stat-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.stat-label{font-size:11px;color:var(--text3);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.stat-label i{font-size:13px}
+.stat-value{font-size:26px;font-weight:700;letter-spacing:-0.5px;line-height:1}
+.stat-sub{font-size:10px;color:var(--text3);margin-top:4px}
+
+/* ── CARDS ───────────────────────────────────────────────────── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
+.card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.card-header{padding:13px 16px 10px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+.card-header h3{font-size:13px;font-weight:600;flex:1}
+.card-header .ch-action{color:var(--accent);font-size:11px;cursor:pointer;font-weight:500}
+.card-header .ch-action:hover{text-decoration:underline}
+.card-body{padding:12px 16px}
+
+/* ── SECTION HEADER ──────────────────────────────────────────── */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.section-header h2{font-size:16px;font-weight:700}
+.section-header p{font-size:11px;color:var(--text2);margin-top:1px}
+.sh-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ── TABS ────────────────────────────────────────────────────── */
+.tab-bar{display:flex;gap:2px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:3px;margin-bottom:16px;overflow-x:auto}
+.tab{padding:6px 14px;border-radius:7px;font-size:12px;cursor:pointer;color:var(--text2);transition:all .15s;font-weight:500;white-space:nowrap;flex-shrink:0}
+.tab.active{background:var(--accent);color:#fff}
+.tab:hover:not(.active){background:var(--glass2);color:var(--text)}
+
+/* ── TABLE ───────────────────────────────────────────────────── */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:600px}
+th{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);padding:9px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text2);vertical-align:middle}
+tr:last-child td{border:none}
+tr:hover td{background:rgba(255,255,255,0.02);color:var(--text)}
+.member-cell{display:flex;align-items:center;gap:9px}
+.mem-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.mem-name{font-size:12px;font-weight:600;color:var(--text)}
+.mem-level{font-size:10px;color:var(--text3)}
+
+/* ── TAGS & BADGES ───────────────────────────────────────────── */
+.role-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;white-space:nowrap;display:inline-block}
+.status-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px}
+.sb-active{background:rgba(74,222,128,0.12);color:var(--green)}
+.sb-prob{background:rgba(245,158,11,0.12);color:var(--amber)}
+.sb-susp{background:rgba(248,113,113,0.12);color:var(--rose)}
+.sb-expelled{background:rgba(100,100,100,0.12);color:var(--text3)}
+.sdot{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* ── WELCOME BANNER ──────────────────────────────────────────── */
+.welcome-banner{background:linear-gradient(120deg,rgba(108,127,255,0.15),rgba(167,139,250,0.1));border:1px solid rgba(108,127,255,0.2);border-radius:var(--r);padding:20px 24px;margin-bottom:18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.wb-icon{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.wb-text h2{font-size:17px;font-weight:700;margin-bottom:2px}
+.wb-text p{font-size:12px;color:var(--text2)}
+.semester-tag{margin-left:auto;background:rgba(108,127,255,0.15);color:var(--accent);font-size:11px;font-weight:600;padding:5px 12px;border-radius:6px;border:1px solid rgba(108,127,255,0.2);white-space:nowrap}
+
+/* ── ATTENDANCE BARS ─────────────────────────────────────────── */
+.attend-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.attend-label{font-size:11px;color:var(--text2);width:72px;flex-shrink:0}
+.attend-bar{flex:1;height:6px;background:var(--surface3);border-radius:4px;overflow:hidden}
+.attend-fill{height:100%;border-radius:4px;transition:width .6s ease}
+.attend-pct{font-size:11px;font-weight:700;width:32px;text-align:right;flex-shrink:0}
+
+/* ── LEADERBOARD ─────────────────────────────────────────────── */
+.lb-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.lb-item:last-child{border:none}
+.lb-rank{font-size:13px;font-weight:700;width:22px;text-align:center;flex-shrink:0}
+.lb-info{flex:1}
+.lb-name{font-size:12px;font-weight:500;color:var(--text)}
+.lb-sub{font-size:10px;color:var(--text3)}
+.lb-pct{font-size:12px;font-weight:700}
+.lb-bar-wrap{width:50px;height:5px;background:var(--surface3);border-radius:3px;overflow:hidden;margin-right:4px}
+.lb-bar-fill{height:100%;border-radius:3px}
+
+/* ── ANNOUNCEMENT ────────────────────────────────────────────── */
+.announce-item{padding:12px 0;border-bottom:1px solid var(--border);display:flex;gap:12px}
+.announce-item:last-child{border:none;padding-bottom:0}
+.ann-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.ann-title{font-size:13px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ann-content{font-size:12px;color:var(--text2);line-height:1.5}
+.ann-meta{font-size:10px;color:var(--text3);margin-top:5px}
+.pin-tag{background:rgba(245,158,11,0.15);color:var(--amber);font-size:9px;font-weight:700;padding:1px 6px;border-radius:4px}
+
+/* ── EVENTS ──────────────────────────────────────────────────── */
+.event-item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)}
+.event-item:last-child{border:none}
+.event-date{background:rgba(108,127,255,0.1);border:1px solid rgba(108,127,255,0.18);border-radius:9px;padding:7px 9px;text-align:center;flex-shrink:0;min-width:44px}
+.event-date .ed-day{font-size:17px;font-weight:700;color:var(--accent);line-height:1}
+.event-date .ed-mon{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em}
+.ev-title{font-size:12px;font-weight:600;margin-bottom:2px}
+.ev-time{font-size:11px;color:var(--text2)}
+.ev-type{font-size:9px;padding:2px 7px;border-radius:4px;font-weight:700;display:inline-block;margin-top:4px}
+.et-chapel{background:rgba(52,214,176,0.12);color:var(--teal)}
+.et-meeting{background:rgba(108,127,255,0.12);color:var(--accent)}
+.et-evangelism{background:rgba(245,158,11,0.12);color:var(--amber)}
+.et-training{background:rgba(167,139,250,0.12);color:var(--accent2)}
+.et-other{background:rgba(139,146,168,0.12);color:var(--text2)}
+
+/* ── CHAT ────────────────────────────────────────────────────── */
+.chat-layout{display:flex;height:calc(100vh - 140px);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--surface2)}
+.chat-sidebar{width:180px;border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+.chat-sidebar-header{padding:10px 12px;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--border)}
+.chat-channels{overflow-y:auto;flex:1}
+.chat-channel{display:flex;align-items:center;gap:7px;padding:8px 12px;cursor:pointer;font-size:12px;color:var(--text2);transition:all .15s}
+.chat-channel:hover{background:var(--glass);color:var(--text)}
+.chat-channel.active{background:rgba(108,127,255,0.12);color:var(--accent)}
+.chat-channel i{font-size:14px;flex-shrink:0}
+.chat-main{flex:1;display:flex;flex-direction:column;min-width:0}
+.chat-topbar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.chat-topbar h4{font-size:13px;font-weight:700;flex:1}
+.chat-topbar p{font-size:11px;color:var(--text3)}
+.messages-area{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:2px}
+.msg-group{margin-bottom:10px}
+.msg{display:flex;gap:10px;padding:3px 0}
+.msg:hover .msg-actions{opacity:1}
+.msg-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;align-self:flex-start;margin-top:2px}
+.msg-body{flex:1;min-width:0}
+.msg-header{display:flex;align-items:baseline;gap:7px;margin-bottom:3px;flex-wrap:wrap}
+.msg-name{font-size:12px;font-weight:700;color:var(--text)}
+.msg-time{font-size:10px;color:var(--text3)}
+.msg-text{font-size:13px;color:var(--text2);line-height:1.55;word-break:break-word}
+.msg-reactions{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+.reaction{background:var(--surface3);border:1px solid var(--border);border-radius:20px;padding:3px 8px;font-size:12px;cursor:pointer;transition:all .15s;user-select:none}
+.reaction:hover{border-color:var(--accent);background:rgba(108,127,255,0.1)}
+.msg-actions{opacity:0;display:flex;gap:4px;margin-left:auto;flex-shrink:0;transition:opacity .15s}
+.msg-action-btn{width:26px;height:26px;border-radius:6px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--text3)}
+.msg-action-btn:hover{color:var(--text);background:var(--surface2)}
+.chat-input-area{padding:12px 16px;border-top:1px solid var(--border);background:var(--surface2)}
+.chat-input-wrap{display:flex;align-items:center;gap:8px;background:var(--surface3);border:1px solid var(--border);border-radius:10px;padding:8px 12px;transition:border-color .15s}
+.chat-input-wrap:focus-within{border-color:var(--accent)}
+.chat-input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:var(--font);resize:none;line-height:1.4;max-height:100px;min-height:20px}
+.chat-input::placeholder{color:var(--text3)}
+.send-btn{background:var(--accent);border:none;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;flex-shrink:0;transition:all .15s;font-size:16px}
+.send-btn:hover{background:#5a6fe8}
+
+/* ── SUBUNIT CARDS ───────────────────────────────────────────── */
+.subunit-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;transition:all .2s;cursor:pointer}
+.subunit-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.2)}
+.su-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.su-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.su-name{font-size:14px;font-weight:700}
+.su-head{font-size:11px;color:var(--text3);margin-top:1px}
+.su-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.su-stat{background:var(--surface3);border-radius:7px;padding:7px 10px;text-align:center}
+.su-stat .n{font-size:18px;font-weight:700;line-height:1}
+.su-stat .l{font-size:9px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:0.04em}
+.su-bar{height:3px;border-radius:2px;margin-top:10px;background:var(--surface3);overflow:hidden}
+.su-bar-fill{height:100%;border-radius:2px;transition:width .6s ease}
+
+/* ── BAR CHART ───────────────────────────────────────────────── */
+.chart-container{position:relative;height:130px}
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:100%;padding-top:8px}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;height:100%;justify-content:flex-end}
+.bar{width:100%;border-radius:4px 4px 0 0;min-height:4px;cursor:pointer;transition:opacity .15s}
+.bar:hover{opacity:0.8}
+.bar-label{font-size:9px;color:var(--text3);white-space:nowrap}
+
+/* ── DONUT ───────────────────────────────────────────────────── */
+.donut-wrap{display:flex;align-items:center;gap:16px}
+.legend-item{display:flex;align-items:center;gap:7px;margin-bottom:7px;font-size:12px;color:var(--text2)}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ── NOTIFICATIONS ───────────────────────────────────────────── */
+.notif-item{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border)}
+.notif-item:last-child{border:none}
+.notif-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.notif-text p{font-size:12px;color:var(--text2);line-height:1.5}
+.notif-text strong{color:var(--text);font-weight:600}
+.notif-time{font-size:10px;color:var(--text3);margin-top:3px}
+.unread-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:4px}
+
+/* ── PROFILE MODAL ───────────────────────────────────────────── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(4px);animation:fadeIn .2s}
+.overlay.hidden{display:none}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:18px;overflow:hidden;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1);color:var(--text2);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;font-size:14px}
+.modal-close:hover{color:var(--text)}
+
+/* Profile modal */
+.profile-modal{width:360px;max-width:95vw}
+.profile-banner{height:90px;background:linear-gradient(120deg,#1a1060,#0a1540,#160a40);position:relative}
+.profile-av-wrap{position:absolute;bottom:-22px;left:18px}
+.profile-av{width:50px;height:50px;border-radius:50%;border:3px solid var(--surface);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700}
+.profile-body{padding:30px 18px 18px}
+.profile-name{font-size:17px;font-weight:700;margin-bottom:2px}
+.profile-email{font-size:11px;color:var(--text2);margin-bottom:8px}
+.profile-tags{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 10px}
+.profile-verse{font-size:11px;color:var(--text2);background:var(--surface2);border-radius:8px;padding:10px 12px;line-height:1.6;font-style:italic;margin-bottom:12px;border-left:2px solid var(--accent)}
+.profile-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.p-stat{background:var(--surface2);border-radius:8px;padding:10px;text-align:center}
+.p-stat .n{font-size:17px;font-weight:700;color:var(--accent)}
+.p-stat .l{font-size:9px;color:var(--text3);margin-top:2px;text-transform:uppercase}
+
+/* Create/Edit modal */
+.form-modal{width:480px;max-width:95vw;max-height:90vh;overflow-y:auto}
+.form-modal .modal-header{padding:18px 20px 0;margin-bottom:20px}
+.form-modal .modal-header h3{font-size:16px;font-weight:700}
+.form-modal .modal-header p{font-size:12px;color:var(--text2);margin-top:2px}
+.form-modal .modal-body{padding:0 20px 20px}
+
+/* ── UPLOAD ZONE ──────────────────────────────────────────────── */
+.upload-zone{border:2px dashed var(--border2);border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:all .2s}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--accent);background:rgba(108,127,255,0.05)}
+.upload-zone i{font-size:32px;color:var(--text3);display:block;margin-bottom:8px}
+
+/* ── ADMIN TILES ──────────────────────────────────────────────── */
+.admin-tile{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:22px 18px;text-align:center;cursor:pointer;transition:all .2s}
+.admin-tile:hover{border-color:var(--border2);transform:translateY(-2px)}
+.admin-tile i{font-size:30px;display:block;margin-bottom:10px}
+.admin-tile h4{font-size:13px;font-weight:600;margin-bottom:3px}
+.admin-tile p{font-size:11px;color:var(--text3)}
+
+/* ── LOADING ──────────────────────────────────────────────────── */
+.loading{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--text3);font-size:13px;gap:10px}
+.spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.skeleton{background:linear-gradient(90deg,var(--surface2) 25%,var(--surface3) 50%,var(--surface2) 75%);background-size:200%;animation:shimmer 1.2s infinite;border-radius:6px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── TOAST ───────────────────────────────────────────────────── */
+#toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:12px 16px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:10px;animation:slideIn .3s ease;min-width:240px;box-shadow:0 4px 24px rgba(0,0,0,0.3)}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+.toast.success{border-color:rgba(74,222,128,0.3);color:var(--green)}
+.toast.error{border-color:rgba(248,113,113,0.3);color:var(--rose)}
+.toast.info{border-color:rgba(108,127,255,0.3);color:var(--accent)}
+
+/* ── DARK/LIGHT TOGGLE ──────────────────────────────────────── */
+body.light-mode{
+  --bg:#f4f6fb;--surface:#ffffff;--surface2:#f0f2f8;--surface3:#e8ebf4;
+  --glass:rgba(0,0,0,0.02);--glass2:rgba(0,0,0,0.05);
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);
+  --text:#1a1d2e;--text2:#555d73;--text3:#9ba3bb;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media(max-width:768px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:100;transform:translateX(-100%);transition:transform .25s}
+  .sidebar.mobile-open{transform:translateX(0)}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr 1fr}
+  .search-wrap{display:none}
+  .chat-sidebar{width:140px}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .auth-card{padding:24px 20px}
+}
+
+/* ── EMPTY STATE ──────────────────────────────────────────────── */
+.empty-state{padding:48px 24px;text-align:center;color:var(--text3)}
+.empty-state i{font-size:40px;display:block;margin-bottom:12px;opacity:0.5}
+.empty-state p{font-size:13px}
+
+/* ── ROLE COLOR SWATCHES ────────────────────────────────────── */
+.color-swatches{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.swatch{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color .15s}
+.swatch.selected{border-color:var(--text)}
+
+/* ── QR CODE ──────────────────────────────────────────────────── */
+.qr-wrap{background:white;padding:12px;border-radius:10px;display:inline-block}
+</style>
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- ──────────────────────── AUTH SCREEN ────────────────────── -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-mark">✦</div>
+      <div class="auth-logo-text">Hospitality Unit<span>Lamak University Chapel</span></div>
+    </div>
+
+    <!-- Auth tabs -->
+    <div class="auth-tabs">
+      <div class="auth-tab active" onclick="showAuthTab('login')">Sign In</div>
+      <div class="auth-tab" onclick="showAuthTab('register')">Register</div>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="auth-login">
+      <div class="alert alert-error" id="login-error"></div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" class="form-input" id="login-email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <input type="password" class="form-input" id="login-password" placeholder="••••••••" autocomplete="current-password">
+          <i class="ti ti-eye input-icon" onclick="togglePwd('login-password',this)"></i>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="login-btn" onclick="doLogin()">
+        <i class="ti ti-login"></i> Sign In
+      </button>
+      <div class="form-footer">
+        <span></span>
+        <span class="form-link" onclick="showAuthTab('forgot')">Forgot Password?</span>
+      </div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text3)">
+        Default admin: <strong style="color:var(--text2)">admin@lamak.edu.ng</strong> / <strong style="color:var(--text2)">password</strong>
+      </div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="auth-register" style="display:none">
+      <div class="alert alert-error" id="reg-error"></div>
+      <div class="alert alert-success" id="reg-success"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" class="form-input" id="reg-name" placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label>Gender</label>
+          <select class="form-input" id="reg-gender">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" class="form-input" id="reg-email" placeholder="your@email.com">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Academic Level</label>
+          <select class="form-input" id="reg-level">
+            <option value="">Select level</option>
+            <option>100L</option>
+            <option>200L</option>
+            <option>300L</option>
+            <option>400L</option>
+            <option>Staff</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Subunit</label>
+          <select class="form-input" id="reg-subunit">
+            <option value="">Loading...</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <input type="password" class="form-input" id="reg-password" placeholder="Min 6 characters">
+          <i class="ti ti-eye input-icon" onclick="togglePwd('reg-password',this)"></i>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="reg-btn" onclick="doRegister()">
+        <i class="ti ti-user-plus"></i> Create Account
+      </button>
+    </div>
+
+    <!-- FORGOT PASSWORD FORM -->
+    <div id="auth-forgot" style="display:none">
+      <div class="alert alert-error" id="forgot-error"></div>
+      <div class="alert alert-success" id="forgot-success"></div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5">Enter your registered email and we'll send you a password reset link.</p>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" class="form-input" id="forgot-email" placeholder="your@email.com">
+      </div>
+      <button class="btn btn-primary" onclick="doForgotPassword()">
+        <i class="ti ti-send"></i> Send Reset Link
+      </button>
+      <div class="form-footer">
+        <span class="form-link" onclick="showAuthTab('login')">← Back to Sign In</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────── MAIN APP ────────────────────────── -->
+<div id="main-app">
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="logo-area">
+      <div class="logo-mark" onclick="toggleSidebar()">✦</div>
+      <div class="logo-text">HospitaUnit <span>Lamak University Chapel</span></div>
+    </div>
+    <nav>
+      <div class="nav-section">
+        <div class="nav-label">Overview</div>
+        <div class="nav-item active" data-page="home">
+          <i class="ti ti-layout-dashboard"></i>
+          <span class="nav-item-text">Dashboard</span>
+        </div>
+        <div class="nav-item" data-page="members">
+          <i class="ti ti-users"></i>
+          <span class="nav-item-text">Members</span>
+        </div>
+        <div class="nav-item" data-page="attendance">
+          <i class="ti ti-clipboard-check"></i>
+          <span class="nav-item-text">Attendance</span>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Community</div>
+        <div class="nav-item" data-page="chat">
+          <i class="ti ti-messages"></i>
+          <span class="nav-item-text">Global Chat</span>
+          <span class="nbadge" id="chat-badge" style="display:none">0</span>
+        </div>
+        <div class="nav-item" data-page="announcements">
+          <i class="ti ti-speakerphone"></i>
+          <span class="nav-item-text">Announcements</span>
+        </div>
+        <div class="nav-item" data-page="events">
+          <i class="ti ti-calendar-event"></i>
+          <span class="nav-item-text">Events</span>
+        </div>
+        <div class="nav-item" data-page="subunits">
+          <i class="ti ti-sitemap"></i>
+          <span class="nav-item-text">Subunits</span>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Insights</div>
+        <div class="nav-item" data-page="analytics">
+          <i class="ti ti-chart-bar"></i>
+          <span class="nav-item-text">Analytics</span>
+        </div>
+      </div>
+      <div class="nav-section admin-only" style="display:none">
+        <div class="nav-label">Admin</div>
+        <div class="nav-item" data-page="admin">
+          <i class="ti ti-shield"></i>
+          <span class="nav-item-text">Admin Panel</span>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="nav-item" style="margin-bottom:4px" onclick="toggleTheme()">
+        <i class="ti ti-moon" id="theme-icon"></i>
+        <span class="nav-item-text">Toggle Theme</span>
+      </div>
+      <div class="user-mini" id="sidebar-user" onclick="openMyProfile()">
+        <div class="uav" id="sidebar-avatar">AD</div>
+        <div class="user-mini-info">
+          <div class="user-mini-name" id="sidebar-name">Loading...</div>
+          <div class="user-mini-role" id="sidebar-role">Member</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <button class="icon-btn" style="display:none" id="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="ti ti-menu-2"></i></button>
+      <div class="topbar-title" id="page-title">Dashboard</div>
+      <div class="search-wrap">
+        <i class="ti ti-search"></i>
+        <input type="text" placeholder="Search members..." id="global-search" oninput="handleSearch(this.value)">
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="icon-btn" onclick="goPage('notifications')" title="Notifications">
+          <i class="ti ti-bell"></i>
+          <div class="notif-dot" id="notif-dot" style="display:none"></div>
+        </div>
+        <div class="uav" style="cursor:pointer;width:34px;height:34px;font-size:12px" id="topbar-avatar" onclick="openMyProfile()">AD</div>
+      </div>
+    </div>
+    <div class="content" id="main-content">
+
+      <!-- ── HOME ──────────────────────────────────────────── -->
+      <div class="page active" id="page-home">
+        <div class="welcome-banner">
+          <div class="wb-icon">✦</div>
+          <div class="wb-text">
+            <h2 id="welcome-msg">Welcome back!</h2>
+            <p>Hospitality Unit — Lamak University Chapel</p>
+          </div>
+          <div class="semester-tag">2024/2025 Session</div>
+        </div>
+        <div class="stats-grid" id="home-stats">
+          <div class="stat-card"><div class="stat-label"><i class="ti ti-users"></i> Total Members</div><div class="stat-value" style="color:var(--accent)" id="stat-total">—</div><div class="stat-sub">Registered members</div></div>
+          <div class="stat-card"><div class="stat-label"><i class="ti ti-circle-check"></i> Active</div><div class="stat-value" style="color:var(--green)" id="stat-active">—</div><div class="stat-sub">In good standing</div></div>
+          <div class="stat-card"><div class="stat-label"><i class="ti ti-alert-circle"></i> Probation</div><div class="stat-value" style="color:var(--amber)" id="stat-prob">—</div><div class="stat-sub">Under review</div></div>
+          <div class="stat-card"><div class="stat-label"><i class="ti ti-ban"></i> Suspended</div><div class="stat-value" style="color:var(--rose)" id="stat-susp">—</div><div class="stat-sub">Temporarily restricted</div></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <i class="ti ti-speakerphone" style="color:var(--accent)"></i>
+              <h3>Announcements</h3>
+              <span class="ch-action" onclick="goPage('announcements')">View all</span>
+            </div>
+            <div class="card-body" id="home-announcements">
+              <div class="loading"><div class="spinner"></div> Loading...</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <i class="ti ti-calendar-event" style="color:var(--teal)"></i>
+              <h3>Upcoming Events</h3>
+              <span class="ch-action" onclick="goPage('events')">View all</span>
+            </div>
+            <div class="card-body" id="home-events">
+              <div class="loading"><div class="spinner"></div> Loading...</div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <i class="ti ti-chart-line" style="color:var(--green)"></i>
+              <h3>Attendance Overview</h3>
+            </div>
+            <div class="card-body" id="home-attendance">
+              <div class="loading"><div class="spinner"></div> Loading...</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <i class="ti ti-trophy" style="color:var(--amber)"></i>
+              <h3>Leaderboard</h3>
+            </div>
+            <div class="card-body" id="home-leaderboard">
+              <div class="loading"><div class="spinner"></div> Loading...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MEMBERS ────────────────────────────────────────── -->
+      <div class="page" id="page-members">
+        <div class="section-header">
+          <div><h2>Members</h2><p id="members-count">Loading...</p></div>
+          <div class="sh-actions">
+            <button class="btn btn-outline btn-sm admin-only" style="display:none" onclick="openImportModal()"><i class="ti ti-upload"></i> Import Excel</button>
+            <button class="btn btn-primary btn-sm admin-only" style="display:none" onclick="openAddMemberModal()"><i class="ti ti-plus"></i> Add Member</button>
+          </div>
+        </div>
+        <div class="tab-bar" id="members-tabs">
+          <div class="tab active" data-status="">All Members</div>
+          <div class="tab" data-status="Active">🟢 Active</div>
+          <div class="tab" data-status="Probation">🟡 Probation</div>
+          <div class="tab" data-status="Suspended">🟠 Suspended</div>
+          <div class="tab" data-status="Expelled">🔴 Expelled</div>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Member</th>
+                  <th>Role</th>
+                  <th>Subunit</th>
+                  <th>Level</th>
+                  <th>Attendance</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="members-tbody">
+                <tr><td colspan="7" class="loading"><div class="spinner"></div> Loading members...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ATTENDANCE ─────────────────────────────────────── -->
+      <div class="page" id="page-attendance">
+        <div class="section-header">
+          <div><h2>Attendance</h2><p>Track and manage member attendance</p></div>
+          <div class="sh-actions">
+            <button class="btn btn-outline btn-sm admin-only" style="display:none" onclick="openMarkAttModal()"><i class="ti ti-pencil"></i> Mark Attendance</button>
+            <button class="btn btn-primary btn-sm admin-only" style="display:none" onclick="openImportAttModal()"><i class="ti ti-file-spreadsheet"></i> Upload Excel</button>
+          </div>
+        </div>
+        <div class="stats-grid" id="att-stats">
+          <div class="stat-card"><div class="stat-label">Present Today</div><div class="stat-value" style="color:var(--green)" id="att-present">—</div><div class="stat-sub" id="att-today-label">Today</div></div>
+          <div class="stat-card"><div class="stat-label">Absent Today</div><div class="stat-value" style="color:var(--rose)" id="att-absent">—</div></div>
+          <div class="stat-card"><div class="stat-label">Attendance Rate</div><div class="stat-value" style="color:var(--accent)" id="att-rate">—</div><div class="stat-sub">Overall</div></div>
+          <div class="stat-card"><div class="stat-label">Subunits</div><div class="stat-value" style="color:var(--teal)" id="att-subunits">—</div></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><i class="ti ti-chart-bar" style="color:var(--accent)"></i><h3>Monthly Trend</h3></div>
+            <div class="card-body"><div class="chart-container"><div class="bar-chart" id="att-chart"><div class="loading"><div class="spinner"></div></div></div></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><i class="ti ti-upload" style="color:var(--teal)"></i><h3>Quick Upload</h3></div>
+            <div class="card-body admin-only" style="display:none" id="att-upload-area">
+              <div class="upload-zone" id="att-dropzone" onclick="document.getElementById('att-file-input').click()">
+                <i class="ti ti-cloud-upload"></i>
+                <p style="font-size:13px;font-weight:500;color:var(--text2)">Drag & drop Excel file</p>
+                <p style="font-size:11px;color:var(--text3);margin-top:4px">Supports .xlsx · .xls · .csv</p>
+                <button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="event.stopPropagation()"><i class="ti ti-folder-open"></i> Browse</button>
+              </div>
+              <input type="file" id="att-file-input" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleAttFile(this)">
+              <div class="form-group" style="margin-top:12px">
+                <label>Service Date & Type</label>
+                <div class="form-row">
+                  <input type="date" class="form-input" id="att-date" value="">
+                  <select class="form-input" id="att-service">
+                    <option>Sunday</option>
+                    <option>Tuesday</option>
+                    <option>Thursday</option>
+                    <option>Special</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body" id="att-no-admin" style="display:none">
+              <div class="empty-state"><i class="ti ti-lock"></i><p>Only admins can upload attendance</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><i class="ti ti-users" style="color:var(--teal)"></i><h3>Member Attendance Summary</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Member</th><th>Sunday</th><th>Tuesday</th><th>Thursday</th><th>Total</th><th>Rate</th></tr></thead>
+              <tbody id="att-summary-tbody"><tr><td colspan="6" class="loading"><div class="spinner"></div></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CHAT ───────────────────────────────────────────── -->
+      <div class="page" id="page-chat">
+        <div class="chat-layout">
+          <div class="chat-sidebar">
+            <div class="chat-sidebar-header">Channels</div>
+            <div class="chat-channels">
+              <div class="chat-channel active" data-channel="general"><i class="ti ti-hash"></i> general</div>
+              <div class="chat-channel" data-channel="announcements"><i class="ti ti-hash"></i> announcements</div>
+              <div class="chat-channel" data-channel="prayer-requests"><i class="ti ti-hash"></i> prayer-requests</div>
+              <div class="chat-channel" data-channel="evangelism"><i class="ti ti-hash"></i> evangelism</div>
+              <div class="chat-channel" data-channel="media-team"><i class="ti ti-hash"></i> media-team</div>
+              <div class="chat-channel" data-channel="welfare"><i class="ti ti-hash"></i> welfare</div>
+            </div>
+          </div>
+          <div class="chat-main">
+            <div class="chat-topbar">
+              <i class="ti ti-hash" style="color:var(--text3)"></i>
+              <div><h4 id="chat-channel-name">general</h4><p id="chat-channel-desc">Unit global chat</p></div>
+              <button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="refreshMessages()"><i class="ti ti-refresh"></i></button>
+            </div>
+            <div class="messages-area" id="messages-area">
+              <div class="loading"><div class="spinner"></div> Loading messages...</div>
+            </div>
+            <div class="chat-input-area">
+              <div class="chat-input-wrap">
+                <textarea class="chat-input" id="chat-input" placeholder="Message #general..." rows="1" onkeydown="handleChatKey(event)" oninput="autoResizeTextarea(this)"></textarea>
+                <button class="send-btn" onclick="sendMessage()"><i class="ti ti-send"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ANNOUNCEMENTS ──────────────────────────────────── -->
+      <div class="page" id="page-announcements">
+        <div class="section-header">
+          <div><h2>Announcements</h2><p>Official unit updates and notices</p></div>
+          <div class="sh-actions">
+            <button class="btn btn-primary btn-sm admin-only" style="display:none" onclick="openAnnouncementModal()"><i class="ti ti-plus"></i> Post Announcement</button>
+          </div>
+        </div>
+        <div id="announcements-list"><div class="loading"><div class="spinner"></div> Loading...</div></div>
+      </div>
+
+      <!-- ── EVENTS ─────────────────────────────────────────── -->
+      <div class="page" id="page-events">
+        <div class="section-header">
+          <div><h2>Upcoming Events</h2><p>Chapel services, meetings, and activities</p></div>
+          <div class="sh-actions">
+            <button class="btn btn-primary btn-sm admin-only" style="display:none" onclick="openEventModal()"><i class="ti ti-plus"></i> Add Event</button>
+          </div>
+        </div>
+        <div id="events-list"><div class="loading"><div class="spinner"></div> Loading...</div></div>
+      </div>
+
+      <!-- ── SUBUNITS ───────────────────────────────────────── -->
+      <div class="page" id="page-subunits">
+        <div class="section-header">
+          <div><h2>Subunits</h2><p id="subunits-count">Loading...</p></div>
+          <div class="sh-actions">
+            <button class="btn btn-primary btn-sm admin-only" style="display:none" onclick="openSubunitModal()"><i class="ti ti-plus"></i> Create Subunit</button>
+          </div>
+        </div>
+        <div class="grid-3" id="subunits-grid">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+      </div>
+
+      <!-- ── ANALYTICS ──────────────────────────────────────── -->
+      <div class="page" id="page-analytics">
+        <div class="section-header">
+          <div><h2>Analytics</h2><p>Membership and attendance insights</p></div>
+          <div class="sh-actions">
+            <button class="btn btn-outline btn-sm" onclick="exportReport('pdf')"><i class="ti ti-file-text"></i> Export PDF</button>
+            <button class="btn btn-outline btn-sm" onclick="exportReport('xlsx')"><i class="ti ti-file-spreadsheet"></i> Export Excel</button>
+          </div>
+        </div>
+        <div class="stats-grid" id="analytics-stats">
+          <div class="stat-card"><div class="stat-label">Total Members</div><div class="stat-value" style="color:var(--accent)" id="an-total">—</div></div>
+          <div class="stat-card"><div class="stat-label">Active Rate</div><div class="stat-value" style="color:var(--green)" id="an-active-rate">—</div></div>
+          <div class="stat-card"><div class="stat-label">Attendance Rate</div><div class="stat-value" style="color:var(--teal)" id="an-att-rate">—</div></div>
+          <div class="stat-card"><div class="stat-label">Total Subunits</div><div class="stat-value" style="color:var(--accent2)" id="an-subunits">—</div></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><i class="ti ti-chart-bar" style="color:var(--accent)"></i><h3>Attendance Trend (6 months)</h3></div>
+            <div class="card-body"><div class="chart-container"><div class="bar-chart" id="analytics-chart"></div></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><i class="ti ti-chart-donut" style="color:var(--teal)"></i><h3>Level Distribution</h3></div>
+            <div class="card-body" id="analytics-donut">
+              <div class="loading"><div class="spinner"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><i class="ti ti-sitemap" style="color:var(--accent2)"></i><h3>Subunit Performance</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Subunit</th><th>Members</th><th>Head</th><th>Attendance Rate</th></tr></thead>
+              <tbody id="analytics-subunits-tbody"><tr><td colspan="4" class="loading"><div class="spinner"></div></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ADMIN PANEL ────────────────────────────────────── -->
+      <div class="page" id="page-admin">
+        <div class="section-header"><div><h2>Admin Panel</h2><p>Full system control and management</p></div></div>
+        <div class="grid-3" style="margin-bottom:18px">
+          <div class="admin-tile" onclick="goPage('members')"><i class="ti ti-users" style="color:var(--accent)"></i><h4>User Management</h4><p>Manage members, roles, status</p></div>
+          <div class="admin-tile" onclick="openRoleModal()"><i class="ti ti-shield-lock" style="color:var(--rose)"></i><h4>Role Management</h4><p>Create and assign custom roles</p></div>
+          <div class="admin-tile" onclick="goPage('subunits')"><i class="ti ti-sitemap" style="color:var(--teal)"></i><h4>Subunit Management</h4><p>Create and manage subunits</p></div>
+          <div class="admin-tile" onclick="goPage('attendance')"><i class="ti ti-clipboard-check" style="color:var(--green)"></i><h4>Attendance Upload</h4><p>Import attendance sheets</p></div>
+          <div class="admin-tile" onclick="goPage('announcements')"><i class="ti ti-speakerphone" style="color:var(--amber)"></i><h4>Announcements</h4><p>Post unit-wide notices</p></div>
+          <div class="admin-tile" onclick="loadAuditLog()"><i class="ti ti-history" style="color:var(--accent2)"></i><h4>Activity Log</h4><p>Full audit trail of actions</p></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><i class="ti ti-history" style="color:var(--teal)"></i><h3>Recent Admin Activity</h3><span class="ch-action" onclick="loadAuditLog()">View all</span></div>
+          <div class="card-body" id="audit-log-preview">
+            <div class="loading"><div class="spinner"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── NOTIFICATIONS ──────────────────────────────────── -->
+      <div class="page" id="page-notifications">
+        <div class="section-header">
+          <div><h2>Notifications</h2></div>
+          <button class="btn btn-outline btn-sm" onclick="markAllRead()"><i class="ti ti-checks"></i> Mark all read</button>
+        </div>
+        <div class="card">
+          <div class="card-body" id="notifications-list">
+            <div class="loading"><div class="spinner"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+</div><!-- /main-app -->
+
+<!-- ──────────────────────── MODALS ──────────────────────────── -->
+
+<!-- PROFILE MODAL -->
+<div class="overlay hidden" id="profile-overlay" onclick="closeModalOnBackdrop(event,'profile-overlay')">
+  <div class="modal profile-modal">
+    <div class="modal-close" onclick="closeOverlay('profile-overlay')"><i class="ti ti-x"></i></div>
+    <div class="profile-banner" id="profile-banner"></div>
+    <div class="profile-av-wrap">
+      <div class="profile-av" id="profile-av">AD</div>
+    </div>
+    <div class="profile-body">
+      <div class="profile-name" id="profile-name">—</div>
+      <div class="profile-email" id="profile-email">—</div>
+      <div class="profile-tags" id="profile-tags"></div>
+      <div class="profile-verse" id="profile-verse" style="display:none"></div>
+      <div class="profile-stats" id="profile-stats"></div>
+      <div style="display:flex;gap:8px;margin-top:4px" id="profile-actions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD/EDIT MEMBER MODAL -->
+<div class="overlay hidden" id="member-modal-overlay" onclick="closeModalOnBackdrop(event,'member-modal-overlay')">
+  <div class="modal form-modal">
+    <div class="modal-close" onclick="closeOverlay('member-modal-overlay')"><i class="ti ti-x"></i></div>
+    <div class="modal-header"><h3 id="member-modal-title">Add Member</h3><p>Fill in member details</p></div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label>Full Name</label><input type="text" class="form-input" id="mm-name" placeholder="Full Name"></div>
+        <div class="form-group"><label>Email</label><input type="email" class="form-input" id="mm-email" placeholder="email@example.com"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Gender</label><select class="form-input" id="mm-gender"><option value="">Select</option><option>Male</option><option>Female</option></select></div>
+        <div class="form-group"><label>Level</label><select class="form-input" id="mm-level"><option value="">Select</option><option>100L</option><option>200L</option><option>300L</option><option>400L</option><option>Staff</option><option>Other</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Subunit</label><select class="form-input" id="mm-subunit"><option value="">None</option></select></div>
+        <div class="form-group"><label>Status</label><select class="form-input" id="mm-status"><option>Active</option><option>Probation</option><option>Suspended</option><option>Expelled</option></select></div>
+      </div>
+      <div class="form-group"><label>Custom Role</label><input type="text" class="form-input" id="mm-custom-role" placeholder="e.g. Choir Liaison, Protocol Officer"></div>
+      <div class="form-group"><label>Role Color</label>
+        <div class="color-swatches" id="role-color-swatches">
+          <div class="swatch selected" data-color="#6c7fff" style="background:#6c7fff"></div>
+          <div class="swatch" data-color="#34d6b0" style="background:#34d6b0"></div>
+          <div class="swatch" data-color="#f59e0b" style="background:#f59e0b"></div>
+          <div class="swatch" data-color="#f87171" style="background:#f87171"></div>
+          <div class="swatch" data-color="#a78bfa" style="background:#a78bfa"></div>
+          <div class="swatch" data-color="#4ade80" style="background:#4ade80"></div>
+          <div class="swatch" data-color="#f9a8d4" style="background:#f9a8d4"></div>
+        </div>
+      </div>
+      <div class="form-group" id="mm-password-group"><label>Password</label><input type="password" class="form-input" id="mm-password" placeholder="Temporary password"></div>
+      <button class="btn btn-primary" onclick="saveMember()" id="mm-save-btn"><i class="ti ti-device-floppy"></i> Save Member</button>
+    </div>
+  </div>
+</div>
+
+<!-- ANNOUNCEMENT MODAL -->
+<div class="overlay hidden" id="ann-modal-overlay" onclick="closeModalOnBackdrop(event,'ann-modal-overlay')">
+  <div class="modal form-modal">
+    <div class="modal-close" onclick="closeOverlay('ann-modal-overlay')"><i class="ti ti-x"></i></div>
+    <div class="modal-header"><h3>Post Announcement</h3><p>Notify all unit members</p></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Title</label><input type="text" class="form-input" id="ann-title" placeholder="Announcement title"></div>
+      <div class="form-group"><label>Content</label><textarea class="form-input" id="ann-content" rows="5" placeholder="Write your announcement..." style="resize:vertical"></textarea></div>
+      <div class="form-group" style="display:flex;align-items:center;gap:10px">
+        <input type="checkbox" id="ann-pinned" style="width:16px;height:16px;accent-color:var(--accent)">
+        <label for="ann-pinned" style="cursor:pointer;font-size:12px;color:var(--text2)">📌 Pin this announcement</label>
+      </div>
+      <button class="btn btn-primary" onclick="postAnnouncement()"><i class="ti ti-send"></i> Post Announcement</button>
+    </div>
+  </div>
+</div>
+
+<!-- EVENT MODAL -->
+<div class="overlay hidden" id="event-modal-overlay" onclick="closeModalOnBackdrop(event,'event-modal-overlay')">
+  <div class="modal form-modal">
+    <div class="modal-close" onclick="closeOverlay('event-modal-overlay')"><i class="ti ti-x"></i></div>
+    <div class="modal-header"><h3>Add Event</h3><p>Schedule a unit event or service</p></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Event Title</label><input type="text" class="form-input" id="ev-title" placeholder="e.g. Chapel Sunday Service"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Date & Time</label><input type="datetime-local" class="form-input" id="ev-date"></div>
+        <div class="form-group"><label>Type</label><select class="form-input" id="ev-type"><option>Chapel</option><option>Meeting</option><option>Evangelism</option><option>Training</option><option>Other</option></select></div>
+      </div>
+      <div class="form-group"><label>Location</label><input type="text" class="form-input" id="ev-location" placeholder="e.g. Main Auditorium"></div>
+      <div class="form-group"><label>Description</label><textarea class="form-input" id="ev-desc" rows="3" placeholder="Event details..." style="resize:vertical"></textarea></div>
+      <button class="btn btn-primary" onclick="saveEvent()"><i class="ti ti-calendar-plus"></i> Save Event</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUBUNIT MODAL -->
+<div class="overlay hidden" id="subunit-modal-overlay" onclick="closeModalOnBackdrop(event,'subunit-modal-overlay')">
+  <div class="modal form-modal">
+    <div class="modal-close" onclick="closeOverlay('subunit-modal-overlay')"><i class="ti ti-x"></i></div>
+    <div class="modal-header"><h3 id="su-modal-title">Create Subunit</h3></div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label>Subunit Name</label><input type="text" class="form-input" id="su-name" placeholder="e.g. Ushering"></div>
+        <div class="form-group"><label>Icon (emoji)</label><input type="text" class="form-input" id="su-icon" placeholder="🤲" maxlength="4"></div>
+      </div>
+      <div class="form-group"><label>Description</label><input type="text" class="form-input" id="su-desc" placeholder="Brief description"></div>
+      <div class="form-group"><label>Color</label>
+        <div class="color-swatches" id="su-color-swatches">
+          <div class="swatch selected" data-color="#6c7fff" style="background:#6c7fff"></div>
+          <div class="swatch" data-color="#34d6b0" style="background:#34d6b0"></div>
+          <div class="swatch" data-color="#f59e0b" style="background:#f59e0b"></div>
+          <div class="swatch" data-color="#f87171" style="background:#f87171"></div>
+          <div class="swatch" data-color="#a78bfa" style="background:#a78bfa"></div>
+          <div class="swatch" data-color="#4ade80" style="background:#4ade80"></div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="saveSubunit()"><i class="ti ti-device-floppy"></i> Save Subunit</button>
+    </div>
+  </div>
+</div>
+
+<!-- STATUS CHANGE MODAL -->
+<div class="overlay hidden" id="status-modal-overlay" onclick="closeModalOnBackdrop(event,'status-modal-overlay')">
+  <div class="modal form-modal" style="width:360px">
+    <div class="modal-close" onclick="closeOverlay('status-modal-overlay')"><i class="ti ti-x"></i></div>
+    <div class="modal-header"><h3>Change Member Status</h3><p id="status-modal-member">Member name</p></div>
+    <div class="modal-body">
+      <input type="hidden" id="status-user-id">
+      <div class="form-group"><label>New Status</label>
+        <select class="form-input" id="status-new">
+          <option value="Active">🟢 Active</option>
+          <option value="Probation">🟡 Probation</option>
+          <option value="Suspended">🟠 Suspended</option>
+          <option value="Expelled">🔴 Expelled</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Reason</label><textarea class="form-input" id="status-reason" rows="3" placeholder="Reason for status change..." style="resize:vertical"></textarea></div>
+      <button class="btn btn-primary" onclick="saveStatusChange()"><i class="ti ti-check"></i> Confirm Change</button>
+    </div>
+  </div>
+</div>
+
+<!-- AUDIT LOG MODAL -->
+<div class="overlay hidden" id="audit-modal-overlay" onclick="closeModalOnBackdrop(event,'audit-modal-overlay')">
+  <div class="modal form-modal" style="width:560px">
+    <div class="modal-close" onclick="closeOverlay('audit-modal-overlay')"><i class="ti ti-x"></i></div>
+    <div class="modal-header"><h3>Activity Log</h3><p>Complete audit trail</p></div>
+    <div class="modal-body" id="audit-full-log">
+      <div class="loading"><div class="spinner"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT PROFILE MODAL -->
+<div class="overlay hidden" id="edit-profile-overlay" onclick="closeModalOnBackdrop(event,'edit-profile-overlay')">
+  <div class="modal form-modal">
+    <div class="modal-close" onclick="closeOverlay('edit-profile-overlay')"><i class="ti ti-x"></i></div>
+    <div class="modal-header"><h3>Edit My Profile</h3><p>Customize your public profile</p></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Bio / About</label><textarea class="form-input" id="ep-bio" rows="3" style="resize:vertical" placeholder="Tell your unit about yourself..."></textarea></div>
+      <div class="form-group"><label>Favorite Bible Verse</label><input type="text" class="form-input" id="ep-verse" placeholder="e.g. Phil 4:13 — I can do all things..."></div>
+      <div class="form-group"><label>Skills / Talents</label><input type="text" class="form-input" id="ep-skills" placeholder="e.g. Photography, Sound Engineering"></div>
+      <div class="form-group"><label>Profile Theme Color</label>
+        <div class="color-swatches" id="ep-color-swatches">
+          <div class="swatch selected" data-color="#6c7fff" style="background:#6c7fff"></div>
+          <div class="swatch" data-color="#34d6b0" style="background:#34d6b0"></div>
+          <div class="swatch" data-color="#f59e0b" style="background:#f59e0b"></div>
+          <div class="swatch" data-color="#f87171" style="background:#f87171"></div>
+          <div class="swatch" data-color="#a78bfa" style="background:#a78bfa"></div>
+          <div class="swatch" data-color="#4ade80" style="background:#4ade80"></div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="saveProfile()"><i class="ti ti-device-floppy"></i> Save Profile</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────────────────────────
+// CONFIGURATION — set your Supabase URL in env or here
+// ──────────────────────────────────────────────────────────────
+const API = '/api'; // Netlify rewrites /api/* → /.netlify/functions/*
+
+// ──────────────────────────────────────────────────────────────
+// STATE
+// ──────────────────────────────────────────────────────────────
+let currentUser = null;
+let authToken = null;
+let currentPage = 'home';
+let currentChannel = 'general';
+let allMembers = [];
+let allSubunits = [];
+let memberStatusFilter = '';
+let selectedRoleColor = '#6c7fff';
+let selectedSuColor = '#6c7fff';
+let selectedEpColor = '#6c7fff';
+let editingMemberId = null;
+let editingSubunitId = null;
+let pollInterval = null;
+
+// ──────────────────────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  const token = localStorage.getItem('lamak_token');
+  const user = localStorage.getItem('lamak_user');
+  if (token && user) {
+    authToken = token;
+    currentUser = JSON.parse(user);
+    showApp();
+  }
+  // Set today's date on attendance input
+  document.getElementById('att-date').value = new Date().toISOString().split('T')[0];
+  // Load subunits for register form
+  loadSubunitsForRegister();
+});
+
+// ──────────────────────────────────────────────────────────────
+// API HELPER
+// ──────────────────────────────────────────────────────────────
+async function api(path, method = 'GET', body = null) {
+  const opts = {
+    method,
+    headers: { 'Content-Type': 'application/json' }
+  };
+  if (authToken) opts.headers['Authorization'] = 'Bearer ' + authToken;
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(API + path, opts);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Request failed');
+  return data;
+}
+
+// ──────────────────────────────────────────────────────────────
+// AUTH
+// ──────────────────────────────────────────────────────────────
+function showAuthTab(tab) {
+  ['login','register','forgot'].forEach(t => {
+    document.getElementById('auth-' + t).style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.auth-tab').forEach((el, i) => {
+    el.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register'));
+  });
+}
+
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+  errEl.classList.remove('show');
+  if (!email || !password) { showErr(errEl, 'Please fill in all fields'); return; }
+  btn.disabled = true; btn.innerHTML = '<div class="spinner"></div> Signing in...';
+  try {
+    const data = await api('/auth/login', 'POST', { email, password });
+    authToken = data.token;
+    currentUser = data.user;
+    localStorage.setItem('lamak_token', authToken);
+    localStorage.setItem('lamak_user', JSON.stringify(currentUser));
+    showApp();
+  } catch(e) {
+    showErr(errEl, e.message);
+  } finally {
+    btn.disabled = false; btn.innerHTML = '<i class="ti ti-login"></i> Sign In';
+  }
+}
+
+async function doRegister() {
+  const full_name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const password = document.getElementById('reg-password').value;
+  const gender = document.getElementById('reg-gender').value;
+  const level = document.getElementById('reg-level').value;
+  const subunit_id = document.getElementById('reg-subunit').value;
+  const errEl = document.getElementById('reg-error');
+  const sucEl = document.getElementById('reg-success');
+  errEl.classList.remove('show'); sucEl.classList.remove('show');
+  if (!full_name || !email || !password) { showErr(errEl, 'Name, email, and password are required'); return; }
+  const btn = document.getElementById('reg-btn');
+  btn.disabled = true; btn.innerHTML = '<div class="spinner"></div> Creating account...';
+  try {
+    const data = await api('/auth/register', 'POST', { full_name, email, password, gender, level, subunit_id: subunit_id || null });
+    authToken = data.token;
+    currentUser = data.user;
+    localStorage.setItem('lamak_token', authToken);
+    localStorage.setItem('lamak_user', JSON.stringify(currentUser));
+    showApp();
+  } catch(e) {
+    showErr(errEl, e.message);
+  } finally {
+    btn.disabled = false; btn.innerHTML = '<i class="ti ti-user-plus"></i> Create Account';
+  }
+}
+
+async function doForgotPassword() {
+  const email = document.getElementById('forgot-email').value.trim();
+  const errEl = document.getElementById('forgot-error');
+  const sucEl = document.getElementById('forgot-success');
+  errEl.classList.remove('show'); sucEl.classList.remove('show');
+  if (!email) { showErr(errEl, 'Please enter your email'); return; }
+  try {
+    const data = await api('/auth/forgot-password', 'POST', { email });
+    sucEl.textContent = data.message + (data.reset_token ? ' (Dev token: ' + data.reset_token + ')' : '');
+    sucEl.classList.add('show');
+  } catch(e) {
+    showErr(errEl, e.message);
+  }
+}
+
+function logout() {
+  localStorage.removeItem('lamak_token');
+  localStorage.removeItem('lamak_user');
+  authToken = null; currentUser = null;
+  if (pollInterval) clearInterval(pollInterval);
+  document.getElementById('auth-screen').style.display = 'flex';
+  document.getElementById('main-app').style.display = 'none';
+  toast('Signed out', 'info');
+}
+
+// ──────────────────────────────────────────────────────────────
+// SHOW APP
+// ──────────────────────────────────────────────────────────────
+function showApp() {
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('main-app').style.display = 'block';
+  setupUser();
+  goPage('home');
+  setupNav();
+  loadNotifications();
+  // Poll notifications every 30s
+  pollInterval = setInterval(loadNotifications, 30000);
+}
+
+function setupUser() {
+  const u = currentUser;
+  const initials = u.full_name.split(' ').map(n=>n[0]).join('').substr(0,2).toUpperCase();
+  const color = u.profile_color || '#6c7fff';
+  document.getElementById('sidebar-avatar').textContent = initials;
+  document.getElementById('sidebar-avatar').style.background = `linear-gradient(135deg, ${color}, ${color}99)`;
+  document.getElementById('topbar-avatar').textContent = initials;
+  document.getElementById('topbar-avatar').style.background = `linear-gradient(135deg, ${color}, ${color}99)`;
+  document.getElementById('sidebar-name').textContent = u.full_name;
+  document.getElementById('sidebar-role').textContent = u.custom_role || u.role || 'Member';
+  document.getElementById('welcome-msg').textContent = `Welcome back, ${u.full_name.split(' ')[0]}! 👋`;
+
+  // Show admin elements
+  if (u.is_admin) {
+    document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
+  }
+}
+
+function setupNav() {
+  document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+    item.addEventListener('click', () => goPage(item.dataset.page));
+  });
+  // Members tabs
+  document.querySelectorAll('#members-tabs .tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('#members-tabs .tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      memberStatusFilter = tab.dataset.status;
+      renderMembers();
+    });
+  });
+  // Chat channels
+  document.querySelectorAll('.chat-channel').forEach(ch => {
+    ch.addEventListener('click', () => {
+      document.querySelectorAll('.chat-channel').forEach(c => c.classList.remove('active'));
+      ch.classList.add('active');
+      currentChannel = ch.dataset.channel;
+      document.getElementById('chat-channel-name').textContent = currentChannel;
+      document.getElementById('chat-input').placeholder = `Message #${currentChannel}...`;
+      loadMessages();
+    });
+  });
+  // Color swatches
+  setupSwatches('role-color-swatches', v => selectedRoleColor = v);
+  setupSwatches('su-color-swatches', v => selectedSuColor = v);
+  setupSwatches('ep-color-swatches', v => selectedEpColor = v);
+}
+
+function setupSwatches(id, cb) {
+  const container = document.getElementById(id);
+  if (!container) return;
+  container.querySelectorAll('.swatch').forEach(s => {
+    s.addEventListener('click', () => {
+      container.querySelectorAll('.swatch').forEach(x => x.classList.remove('selected'));
+      s.classList.add('selected');
+      cb(s.dataset.color);
+    });
+  });
+}
+
+// ──────────────────────────────────────────────────────────────
+// NAVIGATION
+// ──────────────────────────────────────────────────────────────
+const pageTitles = { home:'Dashboard', members:'Members', attendance:'Attendance', chat:'Global Chat', announcements:'Announcements', events:'Events', subunits:'Subunits', analytics:'Analytics', admin:'Admin Panel', notifications:'Notifications' };
+
+function goPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item[data-page]').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  const navItem = document.querySelector(`.nav-item[data-page="${id}"]`);
+  if (navItem) navItem.classList.add('active');
+  document.getElementById('page-title').textContent = pageTitles[id] || id;
+  currentPage = id;
+  // Load page data
+  loadPageData(id);
+  // Close mobile menu
+  document.getElementById('sidebar').classList.remove('mobile-open');
+}
+
+function loadPageData(id) {
+  switch(id) {
+    case 'home': loadHome(); break;
+    case 'members': loadMembers(); break;
+    case 'attendance': loadAttendance(); break;
+    case 'chat': loadMessages(); break;
+    case 'announcements': loadAnnouncements(); break;
+    case 'events': loadEvents(); break;
+    case 'subunits': loadSubunits(); break;
+    case 'analytics': loadAnalytics(); break;
+    case 'admin': loadAdmin(); break;
+    case 'notifications': loadNotifications(true); break;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────
+// HOME PAGE
+// ──────────────────────────────────────────────────────────────
+async function loadHome() {
+  try {
+    const [stats, anns, events, attSummary] = await Promise.all([
+      api('/users/stats'),
+      api('/announcements'),
+      api('/events'),
+      api('/attendance/summary')
+    ]);
+    // Stats
+    document.getElementById('stat-total').textContent = stats.total;
+    document.getElementById('stat-active').textContent = stats.active;
+    document.getElementById('stat-prob').textContent = stats.probation;
+    document.getElementById('stat-susp').textContent = stats.suspended;
+
+    // Announcements
+    renderHomeAnnouncements(anns.slice(0,3));
+    // Events
+    renderHomeEvents(events.slice(0,3));
+    // Attendance
+    renderHomeAttendance(stats);
+    // Leaderboard
+    renderLeaderboard(attSummary);
+  } catch(e) { toast('Failed to load dashboard: ' + e.message, 'error'); }
+}
+
+function renderHomeAnnouncements(anns) {
+  const el = document.getElementById('home-announcements');
+  if (!anns.length) { el.innerHTML = '<div class="empty-state"><i class="ti ti-speakerphone"></i><p>No announcements yet</p></div>'; return; }
+  el.innerHTML = anns.map(a => `
+    <div class="announce-item">
+      <div class="ann-av" style="background:linear-gradient(135deg,var(--accent),var(--accent2))">${initials(a.author?.full_name||'?')}</div>
+      <div>
+        <div class="ann-title">${escHtml(a.title)} ${a.is_pinned ? '<span class="pin-tag">📌 Pinned</span>' : ''}</div>
+        <div class="ann-content">${escHtml(a.content.substr(0,100))}${a.content.length>100?'...':''}</div>
+        <div class="ann-meta">Posted by ${escHtml(a.author?.full_name||'Admin')} · ${timeAgo(a.created_at)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderHomeEvents(events) {
+  const el = document.getElementById('home-events');
+  if (!events.length) { el.innerHTML = '<div class="empty-state"><i class="ti ti-calendar-event"></i><p>No upcoming events</p></div>'; return; }
+  el.innerHTML = events.map(e => {
+    const d = new Date(e.event_date);
+    return `
+      <div class="event-item">
+        <div class="event-date"><div class="ed-day">${d.getDate()}</div><div class="ed-mon">${d.toLocaleString('default',{month:'short'})}</div></div>
+        <div>
+          <div class="ev-title">${escHtml(e.title)}</div>
+          <div class="ev-time">${d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})} · ${escHtml(e.location||'TBD')}</div>
+          <span class="ev-type et-${(e.event_type||'other').toLowerCase()}">${e.event_type||'Other'}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderHomeAttendance(stats) {
+  const rate = stats.attendance_rate || 0;
+  document.getElementById('home-attendance').innerHTML = `
+    <div class="attend-row"><div class="attend-label">Sunday</div><div class="attend-bar"><div class="attend-fill" style="width:${rate}%;background:var(--accent)"></div></div><div class="attend-pct" style="color:var(--accent)">${rate}%</div></div>
+    <div class="attend-row"><div class="attend-label">Tuesday</div><div class="attend-bar"><div class="attend-fill" style="width:${Math.max(rate-7,0)}%;background:var(--teal)"></div></div><div class="attend-pct" style="color:var(--teal)">${Math.max(rate-7,0)}%</div></div>
+    <div class="attend-row"><div class="attend-label">Thursday</div><div class="attend-bar"><div class="attend-fill" style="width:${Math.max(rate-12,0)}%;background:var(--amber)"></div></div><div class="attend-pct" style="color:var(--amber)">${Math.max(rate-12,0)}%</div></div>
+    <div class="attend-row"><div class="attend-label">Overall</div><div class="attend-bar"><div class="attend-fill" style="width:${rate}%;background:var(--green)"></div></div><div class="attend-pct" style="color:var(--green)">${rate}%</div></div>
+  `;
+}
+
+function renderLeaderboard(summary) {
+  const el = document.getElementById('home-leaderboard');
+  if (!summary?.length) { el.innerHTML = '<div class="empty-state"><i class="ti ti-trophy"></i><p>No attendance data yet</p></div>'; return; }
+  const sorted = [...summary].sort((a,b) => b.percentage - a.percentage).slice(0,5);
+  const medals = ['🥇','🥈','🥉','4','5'];
+  const colors = ['var(--amber)','#9ca3af','#b87333','var(--text3)','var(--text3)'];
+  el.innerHTML = sorted.map((m,i) => `
+    <div class="lb-item">
+      <div class="lb-rank" style="color:${colors[i]}">${medals[i]}</div>
+      <div class="mem-av" style="width:28px;height:28px;font-size:10px;background:linear-gradient(135deg,var(--accent),var(--accent2))">${initials(m.full_name)}</div>
+      <div class="lb-info"><div class="lb-name">${escHtml(m.full_name)}</div><div class="lb-sub">${m.subunits?.name||'General'} · ${m.level||'?'}</div></div>
+      <div class="lb-bar-wrap"><div class="lb-bar-fill" style="width:${m.percentage}%;background:var(--green)"></div></div>
+      <div class="lb-pct" style="color:var(--green)">${m.percentage}%</div>
+    </div>
+  `).join('');
+}
+
+// ──────────────────────────────────────────────────────────────
+// MEMBERS PAGE
+// ──────────────────────────────────────────────────────────────
+async function loadMembers() {
+  try {
+    const [members, attSummary] = await Promise.all([
+      api('/users'),
+      api('/attendance/summary')
+    ]);
+    allMembers = members;
+    // Attach attendance to members
+    allMembers.forEach(m => {
+      const att = attSummary.find(a => a.id === m.id);
+      m.attendance_pct = att ? att.percentage : 0;
+    });
+    document.getElementById('members-count').textContent = `${members.length} total members`;
+    renderMembers();
+  } catch(e) { toast('Failed to load members: ' + e.message, 'error'); }
+}
+
+function renderMembers() {
+  const filtered = memberStatusFilter ? allMembers.filter(m => m.status === memberStatusFilter) : allMembers;
+  const tbody = document.getElementById('members-tbody');
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="ti ti-users"></i><p>No members found</p></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = filtered.map(m => {
+    const color = m.custom_role_color || '#6c7fff';
+    const pct = m.attendance_pct || 0;
+    const pctColor = pct >= 75 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--rose)';
+    return `
+    <tr onclick="viewProfile('${m.id}')" style="cursor:pointer">
+      <td><div class="member-cell">
+        <div class="mem-av" style="background:linear-gradient(135deg,${color},${color}88)">${initials(m.full_name)}</div>
+        <div><div class="mem-name">${escHtml(m.full_name)}</div><div class="mem-level">${escHtml(m.email)}</div></div>
+      </div></td>
+      <td>${m.custom_role ? `<span class="role-tag" style="background:${color}22;color:${color}">${escHtml(m.custom_role)}</span>` : `<span style="color:var(--text3);font-size:11px">${m.role||'Member'}</span>`}</td>
+      <td style="color:var(--text2);font-size:12px">${m.subunits?.name||'—'}</td>
+      <td style="color:var(--text2);font-size:12px">${m.level||'—'}</td>
+      <td><span style="color:${pctColor};font-weight:700;font-size:12px">${pct}%</span></td>
+      <td>${statusBadge(m.status)}</td>
+      <td onclick="event.stopPropagation()">
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-outline btn-sm" onclick="viewProfile('${m.id}')"><i class="ti ti-eye"></i></button>
+          ${currentUser.is_admin ? `<button class="btn btn-outline btn-sm" onclick="openEditMemberModal('${m.id}')"><i class="ti ti-edit"></i></button>
+          <button class="btn btn-outline btn-sm" onclick="openStatusModal('${m.id}','${escHtml(m.full_name)}')"><i class="ti ti-shield"></i></button>` : ''}
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ──────────────────────────────────────────────────────────────
+// ATTENDANCE PAGE
+// ──────────────────────────────────────────────────────────────
+async function loadAttendance() {
+  // Show/hide admin elements
+  if (currentUser.is_admin) {
+    document.getElementById('att-upload-area').style.display = '';
+    document.getElementById('att-no-admin').style.display = 'none';
+  } else {
+    document.getElementById('att-upload-area').style.display = 'none';
+    document.getElementById('att-no-admin').style.display = '';
+  }
+  try {
+    const [today, stats, chart, summary] = await Promise.all([
+      api('/attendance/today'),
+      api('/users/stats'),
+      api('/attendance/chart'),
+      api('/attendance/summary')
+    ]);
+    document.getElementById('att-present').textContent = today.present_count;
+    document.getElementById('att-absent').textContent = today.total_active - today.present_count;
+    document.getElementById('att-rate').textContent = stats.attendance_rate + '%';
+    document.getElementById('att-subunits').textContent = stats.subunits;
+    renderAttChart(chart);
+    renderAttSummary(summary);
+  } catch(e) { toast('Failed to load attendance', 'error'); }
+}
+
+function renderAttChart(data) {
+  const el = document.getElementById('att-chart');
+  const max = Math.max(...data.map(d=>d.rate), 1);
+  el.innerHTML = data.map(d => `
+    <div class="bar-col">
+      <div class="bar" style="height:${(d.rate/max)*100}%;background:var(--accent)" title="${d.month}: ${d.rate}%"></div>
+      <div class="bar-label">${d.month.substr(5)}</div>
+    </div>
+  `).join('');
+}
+
+function renderAttSummary(summary) {
+  const tbody = document.getElementById('att-summary-tbody');
+  if (!summary.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No data</td></tr>'; return; }
+  tbody.innerHTML = summary.slice(0,30).map(m => {
+    const pct = m.percentage;
+    const color = pct >= 75 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--rose)';
+    return `<tr>
+      <td><div class="member-cell"><div class="mem-av" style="background:linear-gradient(135deg,var(--accent),var(--accent2));width:24px;height:24px;font-size:9px">${initials(m.full_name)}</div><div class="mem-name">${escHtml(m.full_name)}</div></div></td>
+      <td style="color:var(--text2)">${m.sunday}</td>
+      <td style="color:var(--text2)">${m.tuesday}</td>
+      <td style="color:var(--text2)">${m.thursday}</td>
+      <td style="color:var(--text2)">${m.total_present}/${m.total_sessions}</td>
+      <td><span style="color:${color};font-weight:700">${pct}%</span></td>
+    </tr>`;
+  }).join('');
+}
+
+async function handleAttFile(input) {
+  if (!input.files[0]) return;
+  toast('Excel parsing requires backend processing. Use the bulk import API.', 'info');
+  // In a full implementation, parse with SheetJS and POST to /attendance/bulk
+}
+
+// ──────────────────────────────────────────────────────────────
+// CHAT
+// ──────────────────────────────────────────────────────────────
+async function loadMessages() {
+  const area = document.getElementById('messages-area');
+  area.innerHTML = '<div class="loading"><div class="spinner"></div> Loading...</div>';
+  try {
+    const msgs = await api(`/messages?channel=${currentChannel}`);
+    renderMessages(msgs);
+  } catch(e) { area.innerHTML = '<div class="empty-state"><i class="ti ti-messages"></i><p>Failed to load messages</p></div>'; }
+}
+
+function renderMessages(msgs) {
+  const area = document.getElementById('messages-area');
+  if (!msgs.length) { area.innerHTML = '<div class="empty-state"><i class="ti ti-messages"></i><p>No messages yet. Say hi! 👋</p></div>'; return; }
+  area.innerHTML = msgs.map(m => {
+    const color = m.sender?.custom_role_color || '#6c7fff';
+    const reactions = m.reactions || {};
+    const reactionHtml = Object.entries(reactions).map(([emoji, count]) =>
+      `<span class="reaction">${emoji} ${count}</span>`
+    ).join('');
+    return `
+    <div class="msg" data-id="${m.id}">
+      <div class="msg-av" style="background:linear-gradient(135deg,${color},${color}88)">${initials(m.sender?.full_name||'?')}</div>
+      <div class="msg-body">
+        <div class="msg-header">
+          <span class="msg-name">${escHtml(m.sender?.full_name||'Unknown')}</span>
+          ${m.sender?.custom_role ? `<span class="role-tag" style="background:${color}22;color:${color};font-size:9px;padding:1px 5px">${escHtml(m.sender.custom_role)}</span>` : ''}
+          <span class="msg-time">${timeAgo(m.created_at)}</span>
+          ${m.edited_at ? '<span style="font-size:9px;color:var(--text3)">(edited)</span>' : ''}
+        </div>
+        <div class="msg-text">${escHtml(m.content)}</div>
+        ${reactionHtml ? `<div class="msg-reactions">${reactionHtml}</div>` : ''}
+      </div>
+      <div class="msg-actions">
+        <div class="msg-action-btn" title="React" onclick="addReaction('${m.id}','👍')">👍</div>
+        ${m.sender?.id === currentUser.id ? `<div class="msg-action-btn" onclick="deleteMsg('${m.id}')"><i class="ti ti-trash"></i></div>` : ''}
+        ${currentUser.is_admin && m.sender?.id !== currentUser.id ? `<div class="msg-action-btn" onclick="deleteMsg('${m.id}')"><i class="ti ti-trash"></i></div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+  area.scrollTop = area.scrollHeight;
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const content = input.value.trim();
+  if (!content) return;
+  input.value = '';
+  input.style.height = 'auto';
+  try {
+    await api('/messages', 'POST', { content, channel: currentChannel });
+    loadMessages();
+  } catch(e) { toast('Failed to send message', 'error'); }
+}
+
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function autoResizeTextarea(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+async function deleteMsg(id) {
+  try { await api('/messages/' + id, 'DELETE'); loadMessages(); } catch(e) { toast(e.message, 'error'); }
+}
+
+function refreshMessages() { loadMessages(); }
+
+async function addReaction(msgId, emoji) {
+  toast('Reactions coming soon!', 'info');
+}
+
+// ──────────────────────────────────────────────────────────────
+// ANNOUNCEMENTS
+// ──────────────────────────────────────────────────────────────
+async function loadAnnouncements() {
+  const el = document.getElementById('announcements-list');
+  try {
+    const anns = await api('/announcements');
+    if (!anns.length) { el.innerHTML = '<div class="empty-state"><i class="ti ti-speakerphone"></i><p>No announcements yet</p></div>'; return; }
+    el.innerHTML = anns.map(a => `
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-body">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div class="ann-av" style="background:linear-gradient(135deg,var(--accent),var(--accent2))">${initials(a.author?.full_name||'?')}</div>
+            <div style="flex:1">
+              <div class="ann-title" style="font-size:14px">${escHtml(a.title)} ${a.is_pinned?'<span class="pin-tag">📌 Pinned</span>':''}</div>
+              <div style="font-size:11px;color:var(--text3);margin-bottom:8px">By ${escHtml(a.author?.full_name||'Admin')} · ${timeAgo(a.created_at)}</div>
+              <div style="font-size:13px;color:var(--text2);line-height:1.6">${escHtml(a.content)}</div>
+            </div>
+            ${currentUser.is_admin ? `<button class="btn btn-outline btn-sm" onclick="deleteAnnouncement('${a.id}')"><i class="ti ti-trash"></i></button>` : ''}
+          </div>
+        </div>
+      </div>`).join('');
+  } catch(e) { el.innerHTML = '<div class="empty-state"><i class="ti ti-x"></i><p>Failed to load</p></div>'; }
+}
+
+async function postAnnouncement() {
+  const title = document.getElementById('ann-title').value.trim();
+  const content = document.getElementById('ann-content').value.trim();
+  const is_pinned = document.getElementById('ann-pinned').checked;
+  if (!title || !content) { toast('Title and content required', 'error'); return; }
+  try {
+    await api('/announcements', 'POST', { title, content, is_pinned });
+    closeOverlay('ann-modal-overlay');
+    toast('Announcement posted!', 'success');
+    loadAnnouncements();
+    document.getElementById('ann-title').value = '';
+    document.getElementById('ann-content').value = '';
+    document.getElementById('ann-pinned').checked = false;
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+async function deleteAnnouncement(id) {
+  if (!confirm('Delete this announcement?')) return;
+  try { await api('/announcements/' + id, 'DELETE'); toast('Deleted', 'success'); loadAnnouncements(); } catch(e) { toast(e.message, 'error'); }
+}
+
+// ──────────────────────────────────────────────────────────────
+// EVENTS
+// ──────────────────────────────────────────────────────────────
+async function loadEvents() {
+  const el = document.getElementById('events-list');
+  try {
+    const events = await api('/events');
+    if (!events.length) { el.innerHTML = '<div class="empty-state"><i class="ti ti-calendar-event"></i><p>No upcoming events</p></div>'; return; }
+    el.innerHTML = `<div class="card"><div class="card-body">${events.map(e => {
+      const d = new Date(e.event_date);
+      const now = new Date();
+      const diff = d - now;
+      const days = Math.ceil(diff / 86400000);
+      const countdown = days === 0 ? 'Today!' : days === 1 ? 'Tomorrow' : `In ${days} days`;
+      return `<div class="event-item">
+        <div class="event-date"><div class="ed-day">${d.getDate()}</div><div class="ed-mon">${d.toLocaleString('default',{month:'short'})}</div></div>
+        <div style="flex:1">
+          <div class="ev-title">${escHtml(e.title)}</div>
+          <div class="ev-time">${d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})} · ${escHtml(e.location||'TBD')}</div>
+          <div style="display:flex;gap:6px;margin-top:4px;align-items:center">
+            <span class="ev-type et-${(e.event_type||'other').toLowerCase()}">${e.event_type}</span>
+            <span style="font-size:10px;color:var(--accent);font-weight:600">${countdown}</span>
+          </div>
+          ${e.description ? `<div style="font-size:11px;color:var(--text2);margin-top:4px">${escHtml(e.description)}</div>` : ''}
+        </div>
+        ${currentUser.is_admin ? `<button class="btn btn-outline btn-sm" onclick="deleteEvent('${e.id}')"><i class="ti ti-trash"></i></button>` : ''}
+      </div>`;
+    }).join('')}</div></div>`;
+  } catch(e) { el.innerHTML = '<div class="empty-state"><i class="ti ti-x"></i><p>Failed to load events</p></div>'; }
+}
+
+async function saveEvent() {
+  const title = document.getElementById('ev-title').value.trim();
+  const event_date = document.getElementById('ev-date').value;
+  const event_type = document.getElementById('ev-type').value;
+  const location = document.getElementById('ev-location').value.trim();
+  const description = document.getElementById('ev-desc').value.trim();
+  if (!title || !event_date) { toast('Title and date required', 'error'); return; }
+  try {
+    await api('/events', 'POST', { title, event_date, event_type, location, description });
+    closeOverlay('event-modal-overlay');
+    toast('Event added!', 'success');
+    loadEvents();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+async function deleteEvent(id) {
+  if (!confirm('Delete this event?')) return;
+  try { await api('/events/' + id, 'DELETE'); toast('Deleted', 'success'); loadEvents(); } catch(e) { toast(e.message, 'error'); }
+}
+
+// ──────────────────────────────────────────────────────────────
+// SUBUNITS
+// ──────────────────────────────────────────────────────────────
+async function loadSubunits() {
+  const el = document.getElementById('subunits-grid');
+  try {
+    const data = await api('/subunits');
+    allSubunits = data;
+    document.getElementById('subunits-count').textContent = `${data.length} active subunits`;
+    if (!data.length) { el.innerHTML = '<div class="empty-state"><i class="ti ti-sitemap"></i><p>No subunits yet</p></div>'; return; }
+    el.innerHTML = data.map(s => `
+      <div class="subunit-card">
+        <div class="su-header">
+          <div class="su-icon" style="background:${s.color}22">${s.icon||'✦'}</div>
+          <div>
+            <div class="su-name">${escHtml(s.name)}</div>
+            <div class="su-head">${s.head?.full_name ? 'Head: ' + escHtml(s.head.full_name) : 'No head assigned'}</div>
+          </div>
+          ${currentUser.is_admin ? `<button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="openEditSubunit('${s.id}')"><i class="ti ti-edit"></i></button>` : ''}
+        </div>
+        ${s.description ? `<div style="font-size:11px;color:var(--text2);margin-bottom:8px">${escHtml(s.description)}</div>` : ''}
+        <div class="su-stats">
+          <div class="su-stat"><div class="n" style="color:${s.color}">${s.member_count}</div><div class="l">Members</div></div>
+          <div class="su-stat"><div class="n" style="color:var(--green)">—</div><div class="l">Attendance</div></div>
+        </div>
+        <div class="su-bar"><div class="su-bar-fill" style="width:75%;background:${s.color}"></div></div>
+      </div>
+    `).join('');
+  } catch(e) { el.innerHTML = '<div class="empty-state"><i class="ti ti-x"></i><p>Failed to load</p></div>'; }
+}
+
+async function saveSubunit() {
+  const name = document.getElementById('su-name').value.trim();
+  const icon = document.getElementById('su-icon').value || '✦';
+  const description = document.getElementById('su-desc').value.trim();
+  if (!name) { toast('Name required', 'error'); return; }
+  try {
+    if (editingSubunitId) {
+      await api('/subunits/' + editingSubunitId, 'PUT', { name, icon, description, color: selectedSuColor });
+      toast('Subunit updated!', 'success');
+    } else {
+      await api('/subunits', 'POST', { name, icon, description, color: selectedSuColor });
+      toast('Subunit created!', 'success');
+    }
+    closeOverlay('subunit-modal-overlay');
+    loadSubunits();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+// ──────────────────────────────────────────────────────────────
+// ANALYTICS
+// ──────────────────────────────────────────────────────────────
+async function loadAnalytics() {
+  try {
+    const [stats, chart, members, subunits] = await Promise.all([
+      api('/users/stats'),
+      api('/attendance/chart'),
+      api('/users'),
+      api('/subunits')
+    ]);
+    document.getElementById('an-total').textContent = stats.total;
+    document.getElementById('an-active-rate').textContent = stats.total ? Math.round((stats.active/stats.total)*100) + '%' : '0%';
+    document.getElementById('an-att-rate').textContent = stats.attendance_rate + '%';
+    document.getElementById('an-subunits').textContent = stats.subunits;
+
+    // Attendance chart
+    const chartEl = document.getElementById('analytics-chart');
+    const max = Math.max(...chart.map(d=>d.rate), 1);
+    chartEl.innerHTML = chart.map(d => `
+      <div class="bar-col">
+        <div class="bar" style="height:${(d.rate/max)*100}%;background:var(--accent)" title="${d.rate}%"></div>
+        <div class="bar-label">${d.month.substr(5)}</div>
+      </div>
+    `).join('');
+
+    // Level distribution donut
+    const levels = {};
+    members.forEach(m => { levels[m.level||'Other'] = (levels[m.level||'Other']||0)+1; });
+    const colors = { '100L':'#6c7fff','200L':'#34d6b0','300L':'#f59e0b','400L':'#f87171','Staff':'#a78bfa','Other':'#8b92a8' };
+    const levelEntries = Object.entries(levels).sort((a,b)=>b[1]-a[1]);
+    const total = members.length || 1;
+    document.getElementById('analytics-donut').innerHTML = `
+      <div class="donut-wrap">
+        <svg width="100" height="100" viewBox="0 0 100 100" role="img" aria-label="Level distribution">
+          <circle cx="50" cy="50" r="35" fill="none" stroke="var(--surface3)" stroke-width="16"/>
+          ${(() => {
+            let offset = 25;
+            return levelEntries.map(([lvl, count]) => {
+              const pct = (count/total)*220;
+              const el = `<circle cx="50" cy="50" r="35" fill="none" stroke="${colors[lvl]||'#888'}" stroke-width="16" stroke-dasharray="${pct} ${220-pct}" stroke-dashoffset="${-offset+25}" transform="rotate(-90 50 50)"/>`;
+              offset += pct;
+              return el;
+            }).join('');
+          })()}
+          <text x="50" y="48" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text)">${total}</text>
+          <text x="50" y="59" text-anchor="middle" font-size="8" fill="var(--text3)">Members</text>
+        </svg>
+        <div class="donut-legend">
+          ${levelEntries.map(([lvl, count]) => `
+            <div class="legend-item">
+              <div class="legend-dot" style="background:${colors[lvl]||'#888'}"></div>
+              ${lvl} — ${Math.round((count/total)*100)}%
+            </div>`).join('')}
+        </div>
+      </div>`;
+
+    // Subunit performance table
+    document.getElementById('analytics-subunits-tbody').innerHTML = subunits.map(s => `
+      <tr>
+        <td><div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">${s.icon}</span><strong style="color:var(--text)">${escHtml(s.name)}</strong></div></td>
+        <td style="color:var(--text2)">${s.member_count}</td>
+        <td style="color:var(--text2)">${s.head?.full_name ? escHtml(s.head.full_name) : '—'}</td>
+        <td><span style="color:var(--green);font-weight:700">—</span></td>
+      </tr>`).join('');
+  } catch(e) { toast('Failed to load analytics', 'error'); }
+}
+
+// ──────────────────────────────────────────────────────────────
+// ADMIN
+// ──────────────────────────────────────────────────────────────
+async function loadAdmin() {
+  try {
+    const logs = await api('/users/stats'); // placeholder — full audit log endpoint
+    document.getElementById('audit-log-preview').innerHTML = `
+      <div class="notif-item">
+        <div class="notif-icon" style="background:rgba(108,127,255,0.12)"><i class="ti ti-info-circle" style="color:var(--accent)"></i></div>
+        <div class="notif-text"><p>Admin panel loaded. Total members: <strong>${logs.total}</strong></p><div class="notif-time">Now</div></div>
+      </div>`;
+  } catch(e) {}
+}
+
+async function loadAuditLog() {
+  openOverlay('audit-modal-overlay');
+  const el = document.getElementById('audit-full-log');
+  el.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  try {
+    // This would call /audit-logs endpoint — showing placeholder
+    el.innerHTML = '<div class="empty-state"><i class="ti ti-history"></i><p>Audit logs will appear here as admin actions are performed.</p></div>';
+  } catch(e) { el.innerHTML = '<div class="empty-state"><p>Failed to load</p></div>'; }
+}
+
+// ──────────────────────────────────────────────────────────────
+// NOTIFICATIONS
+// ──────────────────────────────────────────────────────────────
+async function loadNotifications(render = false) {
+  try {
+    const data = await api('/notifications');
+    if (data.unread > 0) {
+      document.getElementById('notif-dot').style.display = '';
+    } else {
+      document.getElementById('notif-dot').style.display = 'none';
+    }
+    if (render) {
+      const el = document.getElementById('notifications-list');
+      if (!data.notifications.length) { el.innerHTML = '<div class="empty-state"><i class="ti ti-bell"></i><p>No notifications</p></div>'; return; }
+      const notifIcons = { announcement:'ti-speakerphone', role:'ti-award', status:'ti-shield', welcome:'ti-heart', default:'ti-bell' };
+      const notifColors = { announcement:'var(--accent)', role:'var(--amber)', status:'var(--rose)', welcome:'var(--green)', default:'var(--text2)' };
+      el.innerHTML = data.notifications.map(n => `
+        <div class="notif-item">
+          <div class="notif-icon" style="background:rgba(108,127,255,0.1)">
+            <i class="ti ${notifIcons[n.type]||notifIcons.default}" style="color:${notifColors[n.type]||notifColors.default}"></i>
+          </div>
+          <div class="notif-text">
+            <p><strong>${escHtml(n.title)}</strong> — ${escHtml(n.message)}</p>
+            <div class="notif-time">${timeAgo(n.created_at)}</div>
+          </div>
+          ${!n.is_read ? '<div class="unread-dot"></div>' : ''}
+        </div>`).join('');
+    }
+  } catch(e) {}
+}
+
+async function markAllRead() {
+  try { await api('/notifications', 'PUT'); loadNotifications(true); toast('All marked read', 'success'); } catch(e) {}
+}
+
+// ──────────────────────────────────────────────────────────────
+// PROFILES
+// ──────────────────────────────────────────────────────────────
+async function viewProfile(id) {
+  openOverlay('profile-overlay');
+  const av = document.getElementById('profile-av');
+  av.textContent = '...';
+  try {
+    const u = await api('/users/' + id);
+    const color = u.profile_color || '#6c7fff';
+    document.getElementById('profile-banner').style.background = `linear-gradient(120deg, ${color}44, ${color}22, ${color}11)`;
+    av.textContent = initials(u.full_name);
+    av.style.background = `linear-gradient(135deg, ${color}, ${color}88)`;
+    document.getElementById('profile-name').textContent = u.full_name;
+    document.getElementById('profile-email').textContent = u.email;
+    const tags = document.getElementById('profile-tags');
+    tags.innerHTML = '';
+    if (u.custom_role) tags.innerHTML += `<span class="role-tag" style="background:${color}22;color:${color}">${escHtml(u.custom_role)}</span>`;
+    tags.innerHTML += statusBadge(u.status);
+    if (u.level) tags.innerHTML += `<span style="font-size:10px;background:var(--surface2);padding:2px 8px;border-radius:4px;color:var(--text2)">${u.level}</span>`;
+    const verse = document.getElementById('profile-verse');
+    if (u.favorite_verse) { verse.textContent = '"' + u.favorite_verse + '"'; verse.style.display = ''; }
+    else verse.style.display = 'none';
+    document.getElementById('profile-stats').innerHTML = `
+      <div class="p-stat"><div class="n">${u.attendance?.percentage || 0}%</div><div class="l">Attendance</div></div>
+      <div class="p-stat"><div class="n" style="font-size:14px">${u.level||'—'}</div><div class="l">Level</div></div>
+      <div class="p-stat"><div class="n" style="font-size:13px">${u.subunits?.name||'General'}</div><div class="l">Subunit</div></div>`;
+    const actions = document.getElementById('profile-actions');
+    actions.innerHTML = '';
+    if (u.id === currentUser.id) {
+      actions.innerHTML = `<button class="btn btn-primary btn-sm" style="flex:1;justify-content:center" onclick="closeOverlay('profile-overlay');openEditProfileModal()"><i class="ti ti-edit"></i> Edit Profile</button>`;
+    }
+    if (currentUser.is_admin && u.id !== currentUser.id) {
+      actions.innerHTML = `
+        <button class="btn btn-outline btn-sm" style="flex:1;justify-content:center" onclick="closeOverlay('profile-overlay');openEditMemberModal('${u.id}')"><i class="ti ti-edit"></i> Edit</button>
+        <button class="btn btn-outline btn-sm" style="flex:1;justify-content:center" onclick="closeOverlay('profile-overlay');openStatusModal('${u.id}','${escHtml(u.full_name)}')"><i class="ti ti-shield"></i> Status</button>`;
+    }
+  } catch(e) { toast('Failed to load profile', 'error'); closeOverlay('profile-overlay'); }
+}
+
+function openMyProfile() { viewProfile(currentUser.id); }
+
+// ──────────────────────────────────────────────────────────────
+// MEMBER MODAL
+// ──────────────────────────────────────────────────────────────
+function openAddMemberModal() {
+  editingMemberId = null;
+  document.getElementById('member-modal-title').textContent = 'Add Member';
+  document.getElementById('mm-name').value = '';
+  document.getElementById('mm-email').value = '';
+  document.getElementById('mm-gender').value = '';
+  document.getElementById('mm-level').value = '';
+  document.getElementById('mm-custom-role').value = '';
+  document.getElementById('mm-password').value = '';
+  document.getElementById('mm-password-group').style.display = '';
+  loadSubunitsIntoSelect('mm-subunit');
+  openOverlay('member-modal-overlay');
+}
+
+async function openEditMemberModal(id) {
+  editingMemberId = id;
+  document.getElementById('member-modal-title').textContent = 'Edit Member';
+  document.getElementById('mm-password-group').style.display = 'none';
+  openOverlay('member-modal-overlay');
+  try {
+    const u = await api('/users/' + id);
+    document.getElementById('mm-name').value = u.full_name || '';
+    document.getElementById('mm-email').value = u.email || '';
+    document.getElementById('mm-gender').value = u.gender || '';
+    document.getElementById('mm-level').value = u.level || '';
+    document.getElementById('mm-status').value = u.status || 'Active';
+    document.getElementById('mm-custom-role').value = u.custom_role || '';
+    await loadSubunitsIntoSelect('mm-subunit', u.subunit_id);
+  } catch(e) { toast('Failed to load member', 'error'); }
+}
+
+async function saveMember() {
+  const name = document.getElementById('mm-name').value.trim();
+  const email = document.getElementById('mm-email').value.trim();
+  const gender = document.getElementById('mm-gender').value;
+  const level = document.getElementById('mm-level').value;
+  const status = document.getElementById('mm-status').value;
+  const custom_role = document.getElementById('mm-custom-role').value.trim();
+  const subunit_id = document.getElementById('mm-subunit').value || null;
+  if (!name || !email) { toast('Name and email required', 'error'); return; }
+  try {
+    if (editingMemberId) {
+      await api('/users/' + editingMemberId, 'PUT', { full_name: name, gender, level, status, custom_role, custom_role_color: selectedRoleColor, subunit_id });
+      toast('Member updated!', 'success');
+    } else {
+      const password = document.getElementById('mm-password').value;
+      if (!password) { toast('Password required', 'error'); return; }
+      await api('/auth/register', 'POST', { full_name: name, email, password, gender, level, subunit_id });
+      await api('/users/' + 'latest', 'PUT', { status, custom_role, custom_role_color: selectedRoleColor }).catch(()=>{});
+      toast('Member added!', 'success');
+    }
+    closeOverlay('member-modal-overlay');
+    loadMembers();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+// ──────────────────────────────────────────────────────────────
+// STATUS MODAL
+// ──────────────────────────────────────────────────────────────
+function openStatusModal(id, name) {
+  document.getElementById('status-user-id').value = id;
+  document.getElementById('status-modal-member').textContent = name;
+  document.getElementById('status-reason').value = '';
+  openOverlay('status-modal-overlay');
+}
+
+async function saveStatusChange() {
+  const id = document.getElementById('status-user-id').value;
+  const status = document.getElementById('status-new').value;
+  const reason = document.getElementById('status-reason').value.trim();
+  try {
+    await api('/users/' + id + '/status', 'POST', { status, reason });
+    closeOverlay('status-modal-overlay');
+    toast('Status updated!', 'success');
+    loadMembers();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+// ──────────────────────────────────────────────────────────────
+// SUBUNIT MODAL
+// ──────────────────────────────────────────────────────────────
+function openSubunitModal() {
+  editingSubunitId = null;
+  document.getElementById('su-modal-title').textContent = 'Create Subunit';
+  document.getElementById('su-name').value = '';
+  document.getElementById('su-icon').value = '';
+  document.getElementById('su-desc').value = '';
+  openOverlay('subunit-modal-overlay');
+}
+
+function openEditSubunit(id) {
+  const s = allSubunits.find(x => x.id === id);
+  if (!s) return;
+  editingSubunitId = id;
+  document.getElementById('su-modal-title').textContent = 'Edit Subunit';
+  document.getElementById('su-name').value = s.name;
+  document.getElementById('su-icon').value = s.icon || '';
+  document.getElementById('su-desc').value = s.description || '';
+  openOverlay('subunit-modal-overlay');
+}
+
+// ──────────────────────────────────────────────────────────────
+// EDIT PROFILE MODAL
+// ──────────────────────────────────────────────────────────────
+function openEditProfileModal() {
+  document.getElementById('ep-bio').value = currentUser.bio || '';
+  document.getElementById('ep-verse').value = currentUser.favorite_verse || '';
+  document.getElementById('ep-skills').value = currentUser.skills || '';
+  openOverlay('edit-profile-overlay');
+}
+
+async function saveProfile() {
+  const bio = document.getElementById('ep-bio').value.trim();
+  const favorite_verse = document.getElementById('ep-verse').value.trim();
+  const skills = document.getElementById('ep-skills').value.trim();
+  try {
+    const updated = await api('/users/' + currentUser.id, 'PUT', { bio, favorite_verse, skills, profile_color: selectedEpColor });
+    currentUser = { ...currentUser, ...updated };
+    localStorage.setItem('lamak_user', JSON.stringify(currentUser));
+    closeOverlay('edit-profile-overlay');
+    toast('Profile updated!', 'success');
+    setupUser();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+// ──────────────────────────────────────────────────────────────
+// HELPERS
+// ──────────────────────────────────────────────────────────────
+function openRoleModal() { toast('Role management — use Edit Member to set custom roles', 'info'); }
+function openImportModal() { toast('Excel import: upload a file in the Attendance tab', 'info'); }
+function openMarkAttModal() { openOverlay('member-modal-overlay'); }
+function openImportAttModal() { goPage('attendance'); }
+function exportReport(type) { toast(`Exporting ${type.toUpperCase()} report... (requires backend file generation)`, 'info'); }
+
+async function loadSubunitsForRegister() {
+  const sel = document.getElementById('reg-subunit');
+  try {
+    const res = await fetch(API + '/subunits', { headers: authToken ? { Authorization: 'Bearer ' + authToken } : {} });
+    const data = await res.json();
+    sel.innerHTML = '<option value="">Select subunit (optional)</option>' +
+      (data || []).filter(s=>s.is_registration_open).map(s => `<option value="${s.id}">${s.icon||''} ${s.name}</option>`).join('');
+  } catch { sel.innerHTML = '<option value="">Could not load subunits</option>'; }
+}
+
+async function loadSubunitsIntoSelect(selId, selectedId = '') {
+  const sel = document.getElementById(selId);
+  try {
+    const data = await api('/subunits');
+    sel.innerHTML = '<option value="">None</option>' + data.map(s => `<option value="${s.id}" ${s.id===selectedId?'selected':''}>${s.icon||''} ${s.name}</option>`).join('');
+  } catch { sel.innerHTML = '<option value="">Could not load</option>'; }
+}
+
+function handleSearch(q) {
+  if (!q || currentPage !== 'members') return;
+  const filtered = allMembers.filter(m =>
+    m.full_name.toLowerCase().includes(q.toLowerCase()) ||
+    m.email.toLowerCase().includes(q.toLowerCase()) ||
+    (m.custom_role||'').toLowerCase().includes(q.toLowerCase())
+  );
+  // Quick render filtered
+  const tbody = document.getElementById('members-tbody');
+  if (!tbody) return;
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><p>No results for "${escHtml(q)}"</p></div></td></tr>`; return; }
+  // reuse renderMembers with temp override
+  const backup = allMembers;
+  allMembers = filtered;
+  renderMembers();
+  allMembers = backup;
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('collapsed');
+}
+
+function toggleMobileMenu() {
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+}
+
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  const icon = document.getElementById('theme-icon');
+  icon.className = document.body.classList.contains('light-mode') ? 'ti ti-sun' : 'ti ti-moon';
+}
+
+function togglePwd(id, icon) {
+  const input = document.getElementById(id);
+  input.type = input.type === 'password' ? 'text' : 'password';
+  icon.className = input.type === 'password' ? 'ti ti-eye input-icon' : 'ti ti-eye-off input-icon';
+}
+
+function openOverlay(id) { document.getElementById(id).classList.remove('hidden'); }
+function closeOverlay(id) { document.getElementById(id).classList.add('hidden'); }
+function closeModalOnBackdrop(e, id) { if (e.target === document.getElementById(id)) closeOverlay(id); }
+function openAnnouncementModal() { openOverlay('ann-modal-overlay'); }
+function openEventModal() { openOverlay('event-modal-overlay'); }
+
+function statusBadge(status) {
+  const map = { Active:'sb-active', Probation:'sb-prob', Suspended:'sb-susp', Expelled:'sb-expelled' };
+  return `<span class="status-badge ${map[status]||''}"><div class="sdot"></div>${status||'Active'}</span>`;
+}
+
+function initials(name) {
+  if (!name) return '?';
+  return name.split(' ').map(n=>n[0]).join('').substr(0,2).toUpperCase();
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return '';
+  const diff = Date.now() - new Date(dateStr).getTime();
+  if (diff < 60000) return 'just now';
+  if (diff < 3600000) return Math.floor(diff/60000) + 'm ago';
+  if (diff < 86400000) return Math.floor(diff/3600000) + 'h ago';
+  if (diff < 604800000) return Math.floor(diff/86400000) + 'd ago';
+  return new Date(dateStr).toLocaleDateString();
+}
+
+function showErr(el, msg) { el.textContent = msg; el.classList.add('show'); }
+
+function toast(msg, type = 'info') {
+  const c = document.getElementById('toast-container');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  const icons = { success:'ti-circle-check', error:'ti-alert-circle', info:'ti-info-circle' };
+  el.innerHTML = `<i class="ti ${icons[type]||icons.info}"></i> ${escHtml(msg)}`;
+  c.appendChild(el);
+  setTimeout(() => { el.style.opacity='0'; el.style.transform='translateX(100%)'; el.style.transition='all .3s'; setTimeout(()=>el.remove(),300); }, 3500);
+}
+
+// Mobile responsive
+if (window.innerWidth < 768) {
+  document.getElementById('mobile-menu-btn').style.display = '';
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.overlay:not(.hidden)').forEach(o => o.classList.add('hidden'));
+  }
+});
+</script>
+</body>
+</html>
