@@ -1,0 +1,15 @@
+/api/auth/*          /.netlify/functions/auth          200
+/api/users           /.netlify/functions/users         200
+/api/users/*         /.netlify/functions/users/:splat  200
+/api/attendance      /.netlify/functions/attendance    200
+/api/attendance/*    /.netlify/functions/attendance/:splat  200
+/api/subunits        /.netlify/functions/api           200
+/api/subunits/*      /.netlify/functions/api/:splat    200
+/api/announcements   /.netlify/functions/api           200
+/api/announcements/* /.netlify/functions/api/:splat    200
+/api/events          /.netlify/functions/api           200
+/api/events/*        /.netlify/functions/api/:splat    200
+/api/messages        /.netlify/functions/api           200
+/api/messages/*      /.netlify/functions/api/:splat    200
+/api/notifications   /.netlify/functions/api           200
+/api/notifications/* /.netlify/functions/api/:splat    200
